@@ -2,13 +2,26 @@
 
 ## Status
 
-Requirements interview in progress. The principles below are confirmed; functional scope and release priorities remain open.
+Requirements Q1–Q52 are complete. The user approved this baseline as sufficiently complete for specification. Specification has not begun; invoking `$to-spec` requires the user's next instruction after documentation review and their Git checkpoint.
+
+Later explicit decisions in Q35–Q52 govern MVP scope where they refine earlier exploratory material. Earlier examples preserve context, not additional release commitments.
+
+## Approved baseline summary
+
+- Confirmed MVP: minimal onboarding and private preparation; lightweight attributable permission; simple invitations and distinct identities; needs, requests, directly accepted and externally reported commitments; visible gaps; ordinary changes and replacement assistance; basic recurrence; attributable completion and explicit need resolution, combined in one action where appropriate and authorized; contextual comments; minimal practical information with access boundaries; restrained reminders; accessibility, recovery, and time-zone clarity; limited essential offline viewing and offline completion; optional reviewed practical external sharing; ordinary medication-assistance coordination; participation ending and privacy handling.
+- Explicitly deferred: comprehensive chat and general discussion feeds; organizational administration and sophisticated shared-device management; multiple circles; dedicated sensitive-record repositories; dedicated dose reminders and structured dose tracking; broader offline editing; elaborate scheduling, dependency automation, and escalation; comprehensive exports, reports, and extensive printing; professional emergency monitoring; comprehensive multilingual support and international expansion. These remain future considerations, not implied commitments.
+- Conditional MVP: representative-based authorization is intended scope only with validated, workable safeguards and review. Narrow supported launch scenarios explicitly if responsible support is not feasible (Q46).
+- Specification decisions: exact fields, access and resolution authority, supported recurrence patterns, correction and conflict behavior, notification defaults, sharing contents, interfaces, authentication, recovery, storage, and synchronization. Preserve settled product meanings and evaluate offline-completion development and testing effort explicitly.
+- Before live use: satisfy applicable privacy, security, legal, authorization, reliability, and operational safeguards; define dispute-review responsibility and protective actions; validate representative support for actual scenarios; address retention, deletion, retained device information, external copies, problem reporting, and fallback coordination. Correct and retest material usability problems before affected functionality enters the pilot. Baseline approval does not establish launch readiness.
+- Evaluation: synthetic sessions with approximately five individuals, including at least two with limited smartphone confidence, approximately 30–45 minutes each; then approximately three family arrangements over four weeks after safeguards. Q51's independent use, correct understanding, and material-problem correction criteria and Q52's reduced effort, clear coordination, dependable behavior, and acceptable burden/trust govern evaluation. Five-minute first-need and 30-second attention targets are diagnostic, not hard thresholds; live results use no rigid numerical success thresholds.
+
+Simplicity, accessibility, minimal setup, and minimal administrative effort govern every capability. Features must not impose a rigid sequence, duplicate acceptance, mandatory separate coordinators, or universal double-confirmation.
 
 ## Purpose
 
 Help family members, friends, and other trusted individuals coordinate dependable assistance for older adults with daily needs, while preserving dignity, autonomy, independence, and quality of life. Reduce miscommunication, duplicated work, missed responsibilities, uncertainty about responsibilities, and stress.
 
-Appointments, transportation, medication-related tasks, household responsibilities, errands, information sharing, scheduling, activity tracking, and communication are illustrative needs to explore, not committed features.
+Appointments, transportation, medication-related tasks, household responsibilities, and errands illustrate the original purpose, not separate specialized feature commitments. The approved summary and Q35–Q47 define which general coordination capabilities support them in the MVP.
 
 ## Simplicity and ease of adoption
 
@@ -45,7 +58,7 @@ Simplicity, low-friction interaction, and ease of adoption are paramount across 
 - Family members, friends, neighbors, and other trusted informal helpers are the primary intended audience.
 - Explore coordination with individual paid caregivers and professional service providers alongside informal helpers, including recurring home visits.
 - Distinguish access for an individual professional from organizational functionality involving employees, administrators, and changing staff assignments.
-- Appropriate coordination with professional caregivers is part of the longer-term vision; individual professional participation remains a candidate capability whose MVP inclusion is undecided.
+- Individual professionals may participate in ordinary authorized coordination within the core MVP; this does not include organizational administration or specialized clinical workflows (Q35, Q40).
 - Evaluate home care agencies and other organizations separately during MVP prioritization. Full organizational functionality is not a confirmed MVP requirement.
 - Explore consent, privacy, responsibilities, access boundaries, and additional professional-care scenarios. Coordination participation alone must not confer medical decision-making authority, broad sensitive-information access, or authority to act on the older adult's behalf.
 
@@ -128,7 +141,7 @@ Explore analogous workflows for medication-related assistance, errands, grocerie
 ## Urgent concerns and emergency boundary
 
 - Everyday care coordination is the application's primary responsibility, not emergency response.
-- Explore a simple, intuitive way for authorized participants to communicate urgent concerns. A dedicated urgent-communication feature is a candidate for MVP prioritization, not a committed capability.
+- The earlier exploration of urgent communication does not commit a dedicated urgent-alert feature to the MVP; it remains deferred under the advanced-capability boundary in Q35. Ordinary contextual communication remains subject to emergency limitations.
 - If urgent communication is supported, distinguish sending from receipt, acknowledgment, and agreement to respond. Do not imply continuous monitoring or a guaranteed immediate response.
 - For genuine emergencies, direct users to appropriate emergency services rather than reliance on the application. Exact presentation remains undecided.
 - Exclude professional emergency monitoring, automatic emergency dispatch, and similar capabilities from the initial MVP. Any future consideration requires separate evaluation.
@@ -139,7 +152,7 @@ Explore analogous workflows for medication-related assistance, errands, grocerie
 
 Provide a convenient, organized way for appropriate trusted participants to find information regularly needed when assisting an older adult, reducing reliance on scattered messages, emails, paper notes, and individual recollections.
 
-Candidate categories to explore, not committed MVP scope:
+Originally explored information categories follow. Q44 confirms only minimal purpose-relevant practical information, not comprehensive records or mandatory fields:
 
 - Important contacts, including physicians, pharmacies, emergency contacts, neighbors, and service providers.
 - Personal preferences, daily routines, communication preferences, and dietary preferences.
@@ -171,9 +184,11 @@ Guiding requirements:
 - Apply additional safeguards only where justified by the nature of the information. Simplicity and minimal administrative burden remain paramount.
 - Editing, flagging, verification, concern resolution, and history mechanisms remain open for later design.
 
-## Medication assistance candidates
+## Medication assistance exploration and subsequent decisions
 
-Explore three levels separately; none is a finalized feature or committed MVP scope:
+The three levels below preserve the original exploration: Q40 includes practical coordination, Q41 defers dedicated dose reminders, and Q42 defers structured dose tracking. Ordinary caregiver reminders and completion reports remain included.
+
+The three levels originally considered were:
 
 1. Practical coordination: prescription pickup, refill reminders, pharmacy information, and medication-related responsibilities accepted by trusted helpers.
 2. Reminders: helping older adults remember medications or caregivers remember medication-related assistance.
@@ -189,11 +204,11 @@ Guiding requirements if these capabilities are included:
 - Do not independently recommend medications, determine dosages, or resolve conflicting medical instructions; those matters belong with qualified healthcare professionals.
 - Evaluate practical benefits, risks, usability, and everyday value of reminders and limited tracking before MVP decisions, with simplicity and ease of use guiding scope.
 
-## Communication candidates
+## Communication exploration and subsequent decisions
 
 - Prioritize exploration of communication associated with a particular need or activity, such as questions, arrangement clarification, changes, and coordination between participants.
 - Explore brief general updates about the older adult, such as well-being, temporary living arrangements, or upcoming caregiver availability changes, shared with appropriate participants.
-- These are candidate capabilities for later MVP evaluation, not a commitment to a full messaging system.
+- Q43 confirms contextual comments and defers standalone general messaging and comprehensive discussion feeds; the examples above preserve the rationale for that boundary.
 - Keep communication contextual where practical and avoid requiring extensive message-history reading to understand the situation or required action.
 - Routine updates, responsibility acceptance, and completion reporting must not require lengthy conversations.
 - Limit sensitive communication to appropriately authorized participants.
@@ -268,7 +283,7 @@ Guiding requirements:
 - Attribute significant participation changes without burdening ordinary users with complicated administration.
 - Delegated application management does not confer legal authority over medical, financial, or personal decisions.
 - Keep participation management extremely simple for ordinary families, with sensible privacy protections largely behind the scenes; avoid dozens of roles, settings, and approvals.
-- Account structure, invitation mechanism, role hierarchy, and permissions implementation remain undecided. Access boundaries require further exploration.
+- Account structure, invitation mechanism, role hierarchy, and permissions implementation remain specification decisions. Apply the confirmed access principles in Q34 and Q44–Q46 rather than reopening their product scope.
 
 ## Access boundaries
 
@@ -319,14 +334,14 @@ Accessibility libraries, specific interface designs, and implementation details 
 
 Remain useful during ordinary connectivity interruptions, including in medical facilities, parking garages, and rural areas, without becoming a complicated offline data-management system.
 
-Offline viewing is a high-priority capability to explore:
+Limited essential offline viewing is confirmed MVP scope under Q37:
 
 - Where practical, retain access to essential information previously made available to an authorized participant, such as appointment details, addresses, contacts, and relevant practical instructions.
 - Respect information-access boundaries and appropriately protect sensitive information retained on devices.
 - Clearly but unobtrusively indicate unavailable connectivity and potentially outdated information; offline information must not imply guaranteed currency.
 - Account for the limitation that revoking access may not immediately remove information stored on a disconnected device.
 
-Offline updates are a separate candidate for MVP evaluation:
+Q38 confirms only offline completion of previously accepted responsibilities already available on the device; broader offline changes are deferred. The following principles apply within that limit:
 
 - Explore simple updates, such as reporting completion of an accepted responsibility, with automatic sharing when connectivity returns.
 - Distinguish updates recorded locally from updates successfully shared with other participants.
@@ -366,7 +381,7 @@ Caching, storage, and synchronization architectures remain undecided. Favor simp
 - Explore occasional family device sharing without confused identities or inappropriate information exposure. Do not assume each participant owns or regularly uses a separate smartphone.
 - Prevent inadvertent exposure of another participant's or care relationship's information on a shared device; address residual sessions, sensitive notifications, and retained information with appropriate safeguards.
 - Avoid cumbersome account-switching or authentication procedures in ordinary use.
-- Regular shared-device use by multiple independently authenticated participants remains a candidate based on demonstrated need. Sophisticated professional shared-work-device management is not an initial MVP requirement and belongs with separate organizational evaluation.
+- Sophisticated regular shared-device support is deferred; distinct identities, assisted participation, and protection against incidental shared-device disclosure remain requirements. Professional shared-work-device management belongs with separate organizational evaluation.
 - Authentication methods, account-switching mechanisms, and device-management architecture remain undecided.
 
 ## Identity recovery and coordination continuity
@@ -403,7 +418,7 @@ Caching, storage, and synchronization architectures remain undecided. Favor simp
 - Avoid automatically including unrelated sensitive medical, financial, or personal information.
 - Recognize that external copies may be redistributed and cannot necessarily be recalled. Export must not imply verified accuracy or completeness.
 - Prefer simple sharing or printing where it reduces work; avoid elaborate report builders, complicated sharing permissions, and extensive configuration.
-- Simple sharing of essential practical information is a potentially valuable early capability. Comprehensive exports, formal reports, and extensive printing remain candidates for later prioritization, not automatic MVP commitments.
+- Q39 confirms simple practical external sharing; comprehensive exports, formal reports, and extensive printing are deferred unless independently required.
 - Evaluate applicable data-access and portability obligations before launch separately from convenience features, alongside privacy, retention, and deletion requirements.
 - File formats, sharing mechanisms, and technical implementations remain undecided. Reduce coordination work rather than creating another information-management system.
 
@@ -459,6 +474,249 @@ Participants should understand within seconds what, if anything, needs attention
 - When nothing requires attention, say so clearly rather than manufacturing tasks or notifications.
 - Make common actions accessible with minimal taps. Avoid clutter, excessive status indicators, complicated filtering, extensive customization, or an administrative dashboard users must study.
 - Screens, navigation structures, layouts, and technical implementations remain undecided.
+
+## Initial collaboration authorization (Q34)
+
+The preferred MVP starting point for ordinary coordination is a lightweight, attributable statement of permission, with limited sharing and clear ways to address objections or withdrawal.
+
+- When the older adult retains relevant decision-making authority, their preferences and permission govern. An organizer may record that ordinary assistance coordination and, where applicable, invitations to trusted helpers were authorized.
+- Identify the person making the statement and its general scope without extensive forms or documentation. Distinguish reported permission from independently verified consent; family relationships alone do not establish authorization.
+- Limit initial collaboration to ordinary coordination information reasonably necessary for authorized assistance. Coordination permission does not grant access to all information; define sensitive medical, financial, and personal access separately.
+- Invitations must not expose unnecessary sensitive information before appropriate access is established. Users must not need to understand complicated permission structures to begin ordinary coordination.
+- Provide straightforward ways to express objections, limit participation, withdraw permission, and report disputed authorization or inappropriate access. Credible objections or disputes must trigger appropriate restrictions on further sharing while authorization is addressed.
+- Do not independently determine legal capacity or resolve legal-authority disputes. Legal-representative claims and situations where the older adult cannot provide permission require separate consideration and potentially additional safeguards.
+- Do not ordinarily require powers of attorney, digital signatures, or elaborate questionnaires for everyday coordination. Keep safeguards understandable, proportional, and largely behind the scenes; reserve additional verification for genuinely necessary situations.
+- Specific verification methods, disputed-authority procedures, sensitive-access boundaries, and legal-compliance mechanisms require further definition before launch.
+
+## Confirmed core MVP foundation (Q35)
+
+Deliver one complete, intuitive everyday coordination experience that makes assistance substantially easier to organize than scattered calls, messages, emails, and calendars.
+
+Core capabilities for appropriately authorized participants:
+
+- Quickly establish a basic coordination arrangement without extensive onboarding.
+- Record an actual assistance need with minimal necessary information.
+- Invite trusted helpers and request assistance without complicated participation management.
+- Record commitments obtained outside the application without requiring every helper to become an application user.
+- Distinguish requests, directly accepted or reported commitments, and unresolved needs.
+- Understand personal commitments and relevant coordination gaps requiring attention.
+- Accommodate ordinary plan changes, cancellations, and replacement assistance.
+- Report completion of responsibilities without implying resolution of the entire need.
+
+Supporting MVP requirements include minimal practical coordination information; restrained relevant notifications and reminders; appropriate access boundaries and Q34 authorization; accessible, predictable interactions; distinct identities and straightforward recovery; clear scheduling and time-zone handling; and basic participation ending, access withdrawal, and privacy handling. Necessary security and legal safeguards must be defined before launch.
+
+The experience must not impose a rigid sequence: creating a need does not require immediate invitations; an outside agreement does not require repeated in-app acceptance; simple needs do not require separate coordinators or elaborate responsibility structures; ordinary completion does not require extra verification; and irrelevant coordination steps may be skipped.
+
+Q36–Q42 settle the previously open candidates: include basic recurrence, limited essential offline viewing, limited offline completion, practical external sharing, and ordinary medication coordination; defer broader offline editing, dedicated dose reminders, and structured dose tracking. Other advanced capabilities remain deferred unless necessary for the basic journey or a responsible launch. Guiding requirements for future capabilities remain preserved.
+
+Success means a family can identify a need, arrange assistance, recognize gaps, respond to changes, and understand completion with substantially less effort and confusion than its previous informal methods. Q48–Q52 confirm evaluation plans and criteria.
+
+## Confirmed MVP recurrence (Q36)
+
+Basic recurrence is included in the MVP because it directly reduces repetitive family coordination work. This decision settles the earlier open prioritization question for recurrence.
+
+- Support simple, common arrangements, such as daily or weekly assistance, with minimal information and configuration. Exact supported patterns remain for specification.
+- Ordinarily accept an ongoing commitment once, including commitments reported from outside the application. Distinguish accepted recurring commitments from recurring needs with assistance not yet arranged.
+- Distinguish individual occurrences: completion, cancellation, or missed assistance on one date must not incorrectly affect other dates. Completing one occurrence does not complete future occurrences.
+- Allow a helper to become unavailable for a particular occurrence without necessarily ending their ongoing commitment. Keep that occurrence visibly unresolved until replacement assistance is arranged.
+- Allow authorized changes to or ending of future arrangements without altering accurate history or reported completion. A single-occurrence change must not unintentionally change the series.
+- Avoid repeated confirmations, excessive notifications, and unnecessary occurrence management. Make exceptions and gaps visible without requiring routine administration of each occurrence.
+- Defer elaborate recurrence rules, complex dependency automation, and sophisticated scheduling systems. Technical implementation remains undecided.
+
+## Confirmed MVP essential offline viewing (Q37)
+
+Limited offline viewing is included in the MVP: participants should not lose essential practical information merely because connectivity temporarily disappears. This settles the earlier open prioritization question for essential offline viewing.
+
+- Let authorized participants view previously available information reasonably necessary for accepted responsibilities, such as appointment times, locations, addresses, relevant contacts, and practical instructions, within established access boundaries.
+- Ordinarily make essential information available offline automatically where practical, without manual preparation for each responsibility. Keep connected and disconnected use simple and predictable.
+- Clearly but unobtrusively indicate potentially outdated information; do not guarantee currency or imply information is available offline when it was never made available on the device.
+- Do not require users to understand caching or synchronization.
+- Appropriately protect sensitive information retained on devices and address device loss and retained information in security and privacy requirements. Revocation cannot guarantee immediate removal from a disconnected device.
+- Comprehensive offline access, extensive sensitive records offline, offline changes, comprehensive offline operation, and complex synchronization are not included by this decision. Offline updates require separate evaluation.
+- Storage, caching, encryption, and synchronization implementations remain undecided.
+
+## Confirmed MVP limited offline completion (Q38)
+
+Include narrowly limited offline completion so helpers can report assistance when it occurs without remembering to return later. This settles the earlier open question for this subset of offline updates.
+
+- Allow a participant to record completion of a previously accepted responsibility already available on their device. Save locally and automatically transmit when connectivity returns, subject to valid authorization and successful synchronization.
+- Do not require manual retries or technical synchronization management in ordinary operation.
+- Clearly but unobtrusively distinguish locally saved reports from successfully shared reports, for example, "Saved - waiting to share." Do not imply others received an update before successful transmission.
+- Preserve pending reports through ordinary connectivity interruptions and application restarts. Repeated transmission attempts must not create duplicate completion reports.
+- Do not silently overwrite newer information if the responsibility was canceled, reassigned, or materially changed while offline. Handle exceptional conflicts clearly with minimal user effort.
+- Preserve attribution to the recording participant and appropriately protect local information. Do not share reports if the participant no longer has required authorization.
+- Completing one responsibility does not resolve every aspect of the underlying need.
+- Exclude broader offline changes from the initial MVP, including accepting new responsibilities, reassignment, shared-information editing, and complex conflict management, unless a later concrete need justifies reconsideration.
+- During specification, explicitly evaluate development and testing implications to keep this capability appropriately limited. Local storage, synchronization, and conflict-resolution architecture remain undecided.
+
+## Confirmed MVP practical external sharing (Q39)
+
+Include optional, simple sharing of selected practical coordination information with people who do not use the application. This settles the earlier open prioritization question for practical external sharing.
+
+- Let an appropriately authorized participant share a concise, purpose-specific summary of one assistance arrangement, potentially including date, time, location, relevant contacts, and practical instructions.
+- Do not require recipients to install the application or create an account. Prefer quick, understandable sharing through familiar communication methods; exact mechanisms and formats remain for specification.
+- Let participants review and understand the information before sharing. Include only information appropriate to the purpose and authorized for disclosure.
+- Exclude unrelated sensitive medical, financial, and personal information by default. Consider potentially sensitive practical instructions separately rather than including them automatically.
+- Identifying a potential helper must not automatically share information.
+- Recognize that external information may be retained, copied, or redistributed and cannot necessarily be deleted by revoking application access. A shared summary does not independently verify accuracy or completeness.
+- Keep the ordinary experience to selecting an arrangement, reviewing relevant details, and sharing, without report building, elaborate permission configuration, or re-entry of known information. Sharing is optional, not a required coordination step.
+- Keep comprehensive exports, report builders, extensive printing, and advanced external collaboration outside the initial MVP unless independently required.
+- Technical implementation remains undecided.
+
+## Confirmed MVP practical medication coordination (Q40)
+
+Include practical medication-related assistance through ordinary coordination capabilities, without a dedicated medication-management area.
+
+- Coordinate prescription pickups, refill-related errands, pharmacy visits, and similar assistance like other responsibilities, using recurring arrangements and ordinary reminders where appropriate.
+- Do not require medication lists, detailed medication records, specialized workflows, extra forms, specialized configuration, or medical terminology.
+- Include pharmacy details, contacts, and practical instructions where helpful. Medication names, dosages, and other sensitive details remain optional and appropriately protected; share only information reasonably necessary for the helper's responsibility.
+- Reported prescription-pickup completion establishes only reported pickup, not administration, ingestion, or clinical verification.
+- Do not independently determine dosages, prescribe treatment, interpret conflicting clinical instructions, or make medical decisions.
+- A dedicated medication database, pharmacy integrations, automatic refill management, medication administration records, and specialized clinical functionality are not required for this capability.
+- Q41 and Q42 defer dedicated dose reminders and structured dose tracking. Interface and technical implementation remain for specification.
+
+## Confirmed MVP medication reminder boundary (Q41)
+
+- Include ordinary reminders for accepted medication-related caregiver responsibilities, such as assistance with an established routine, prescription pickup, or checking whether assistance is needed. Apply ordinary recurrence and reminders without repeated creation or acceptance of ongoing commitments.
+- Reminders concern the agreed assistance responsibility, not independently prescribed or verified medication administration. Sensitive medication details remain optional and protected.
+- Defer dedicated medication-dose reminders until after the initial release, subject to user research, pilot feedback, safety considerations, and demonstrated demand.
+- The MVP does not require detailed medication schedules or dosage information, medication-specific dose reminders, specialized reminder or prescription-change management, medication-specific escalation, or missed-dose alert systems.
+- Delivery or acknowledgment of a reminder does not establish administration or ingestion. Notifications do not guarantee receipt or action; ordinary reminders are not medical monitoring or a substitute for appropriate medication-management arrangements.
+- Do not independently determine dosages, interpret clinical instructions, or recommend treatment.
+- Preserve reasonable future flexibility without unnecessary medication-specific architecture or workflows. Q42 settles dose-taking tracking as deferred.
+
+## Confirmed MVP medication completion boundary (Q42)
+
+- Include ordinary completion reporting for accepted medication-assistance responsibilities through the same mechanisms as other activities, attributing who reported completion and when.
+- A report establishes only reported completion of the agreed assistance, not administration, ingestion, or clinical verification of particular medications, nor resolution of the overall need.
+- Defer structured dose tracking and medication administration records until a potential future release justified by actual needs and the additional complexity and safety requirements.
+- The MVP does not require individual medication records marked taken, missed, refused, or administered; prescribed dosage and medication-specific administration-time tracking; reconciliation of conflicting or duplicate administration reports; specialized missed-dose alerts or escalation; or clinical administration histories.
+- Keep medication information optional and appropriately restricted. Do not independently prescribe, determine dosages, interpret conflicting clinical instructions, or make treatment decisions.
+- Ordinary assistance reminders and completion reports are not substitutes for appropriate medication-management arrangements.
+- Do not require medication schedules, medication lists, or specialized forms. Avoid medication-specific complexity without demonstrated value.
+
+## Confirmed MVP contextual comments (Q43)
+
+- Include brief comments associated with individual needs or responsibilities for practical questions, clarification, and relevant circumstances. Attribute comments to their authors and make relevant comments easy to find in context.
+- Restrict visibility to participants appropriately authorized for the information and involvement.
+- Keep structured arrangement information authoritative and directly visible, including times, locations, accepted responsibilities, and completion status. Comments alone must not silently change schedules, assign responsibilities, modify commitments, or establish completion.
+- Reflect important changes in the arrangement itself rather than only in comments. Do not require lengthy conversation-history reading to understand the current arrangement.
+- Keep comments secondary to coordination. Routine acceptance, refusal, changes, and completion should be direct actions without required comments or explanations.
+- Apply restrained notifications: avoid excessive comment notifications while bringing relevant questions or material changes to appropriate participants' attention when warranted.
+- Defer standalone general messaging, chat rooms, comprehensive family discussion feeds, extensive conversation management, and advanced message organization or communication preferences unless future needs justify them.
+- Messaging technology, notification mechanisms, and interface designs remain undecided.
+
+## Confirmed MVP sensitive-information scope (Q44)
+
+- Include minimal, purpose-relevant information reasonably necessary for assistance, such as mobility instructions, accessibility needs, practical health considerations, pharmacy details, emergency contacts, and assistance instructions.
+- Collect gradually as needed; sensitive details are not mandatory for creating a need or arranging assistance. Do not encourage unnecessary medical, financial, or personal information collection.
+- Limit access to authorized involvement, ordinarily giving limited-purpose helpers only what their responsibilities require. Broader access requires appropriate authorization, with sensible privacy defaults and minimal permission administration.
+- Apply boundaries consistently to descriptions, instructions, comments, offline information, and external summaries. Offline access must not bypass authorization; external sharing requires authorization and review of selected information.
+- Avoid incidental sensitive disclosure through invitations, notifications, or other communications. Do not require manual classification of every ordinary information item for reasonable protection.
+- Defer dedicated repositories for comprehensive medical or clinical records, financial statements or account-management records, legal documents such as powers of attorney, trusts, and wills, and extensive medication histories or clinical medication management. Assistance involving these subjects may be coordinated without storing underlying records.
+- Sensitive-information protection is foundational. Participant-entered information must not imply medical, legal, or independent verification.
+- Evaluate applicable privacy, security, retention, and legal requirements before launch. Consider future specialized records only for demonstrated needs, without adding their complexity to the MVP.
+- Data structures, security technologies, and permission architecture remain undecided.
+
+## Confirmed MVP authorization concerns and withdrawal (Q45)
+
+- Include straightforward access withdrawal, reporting of suspected unauthorized participation, access, or sharing, and proportionate protective restrictions.
+- Ordinarily respect effective withdrawal or limitation promptly when the older adult retains relevant authority. Restrict or end affected access without unnecessary disruption to unrelated assistance or automatic deletion of historical records.
+- Recognize that previously accessed, externally shared, or offline information cannot necessarily be retrieved.
+- Credible concerns should prompt proportionate protection, potentially temporary restrictions on affected access or further disclosure. An allegation alone does not establish legal authority; do not disable the whole arrangement when narrower measures are appropriate.
+- Preserve relevant history subject to privacy and retention requirements, and accurately represent unresolved responsibilities during restrictions.
+- Define a clear, realistic review process before launch, including who reviews significant concerns, available protective actions, and handling of unresolved concerns.
+- Do not independently determine legal capacity, conclusively interpret legal documents, or adjudicate competing authority claims. Do not promise immediate intervention or determinations the operator cannot provide.
+- Keep ordinary corrections and routine participation changes outside formal review and avoid elaborate dispute procedures for everyday users.
+- Detailed review procedures, safeguards, and legal-compliance requirements remain launch prerequisites, not settled mechanisms.
+
+## Intended MVP representative-based authorization (Q46)
+
+Include representative-based authorization in intended MVP scope, conditional on defining and validating a workable, legally appropriate safeguard and review process before launch. If that cannot be achieved responsibly within MVP constraints, explicitly narrow supported launch scenarios rather than use an insecure shortcut.
+
+Confirmed requirements:
+
+- Distinguish the older adult's own permission from representative authority. Smartphone non-use, limited technical ability, diagnosis, and family relationships do not themselves establish incapacity or authority. Preserve lightweight reporting of the older adult's permission when they can provide it.
+- Accommodate an appropriately authorized representative establishing or managing coordination when the older adult cannot personally provide relevant permission. Authority must cover the particular decisions, participation arrangements, and disclosures involved.
+- Do not infer authority from labels such as spouse, adult child, caregiver, agent, or guardian, or transfer authority over one subject to unrelated personal or healthcare matters. Accommodate changes, limits, expiration, and termination.
+- Unsupported assertions must not automatically grant access equivalent to established authorization. Insufficiently supported or unresolved claims must not enable unrestricted collaboration or sensitive disclosure; appropriate private preparation may remain available.
+- Do not independently determine legal capacity or conclusively adjudicate competing claims. Apply Q45 protective restrictions and review principles when authority is challenged or questionable, respecting the older adult's legally effective decisions and preferences.
+- Preserve appropriate historical accountability without unnecessary disruption to unrelated assistance. Handle any supporting documents securely, only for the necessary purpose, with appropriate retention and deletion.
+- Keep representative-specific procedures out of ordinary permission-based use. Do not require every family to upload documents, answer lengthy questionnaires, or navigate legal terminology; do not build comprehensive legal-document management or adjudication.
+
+Unresolved launch prerequisites: define and validate the proportionate authority-establishment process, review responsibilities and safeguards, applicable state and authority-type considerations, and secure supporting-document handling if required. Confirm supported launch scenarios after that assessment. No verification implementation or legal determination is settled here.
+
+## Confirmed MVP explicit need resolution (Q47)
+
+- Include explicit overall need resolution. Where appropriate, let an authorized participant report responsibility completion and expressly confirm that the underlying need was addressed in one intuitive action, with clear meaning and attribution of both outcomes. Neither outcome implies independent verification.
+- Preserve completion-only reporting when a participant's contribution does not establish overall resolution or they lack authority to resolve the need. Authority to report a responsibility completed does not automatically confer authority to resolve the whole need.
+- For multi-part needs, keep responsibilities and their statuses distinct. An appropriately authorized participant may expressly resolve the need after remaining responsibilities are completed, potentially combined with the final completion action without another approval round.
+- Never infer overall resolution solely from one or all completion reports. Reporting overall resolution must not silently complete, cancel, or dismiss outstanding responsibilities.
+- Allow correction of inaccurate completion or resolution reports while preserving appropriate history and attribution. Ordinary activities do not require independent verification or multi-person approval.
+- Avoid repeated confirmations, unnecessary screens, and complicated status management. Present straightforward situation-appropriate actions and manage internal reporting distinctions behind the scenes. Additional confirmation must address a genuine risk rather than be imposed universally.
+
+## Confirmed evaluation sequence (Q48)
+
+Use two stages to evaluate simplicity and everyday coordination value. Q49–Q52 confirm participant targets, duration, and observable criteria without rigid numerical success thresholds.
+
+Stage 1: short, structured usability sessions using fictional older adults, helpers, appointments, and needs, without requiring real medical, financial, or other sensitive care information.
+
+- Observe first-time organizers, invited helpers, and returning participants completing core activities without extensive explanation or coaching: recording needs, requesting help, accepting or declining, identifying unresolved responsibilities, reporting completion, and expressly confirming resolution.
+- Include ordinary changes, recurring exceptions, and simulated connectivity interruptions as relevant capabilities become available. Evaluate limited-smartphone-experience use.
+- Use observation and a few brief feedback questions rather than lengthy questionnaires. Testing may start with prototypes or partial implementations before the entire MVP is complete.
+
+Stage 2: a small live-family pilot with actual coordination only after significant usability problems are addressed and applicable privacy, security, authorization, and operational safeguards are in place.
+
+- Assess ease and burden relative to previous methods, understanding of responsibilities and changes, reduced unnecessary communication, confusion and duplication, notification burden, reliability, and confidence in information.
+- Minimize feedback requests; do not require diaries, extensive surveys, or administrative reporting. Treat results as preliminary evidence, not definitive proof of effectiveness.
+- Address representative authorization, disputed permission, offline information, and external sharing safeguards where relevant before live use. Do not imply guaranteed assistance, emergency monitoring, or independent verification of care.
+
+## Confirmed initial usability round (Q49)
+
+- Begin with approximately five individual participants, including at least two with limited smartphone confidence or experience. Where practical, include family organizers, occasional helpers, and older adults who may participate directly, considering age, technology experience, and accessibility needs.
+- Aim for approximately 30-minute sessions, allowing up to 45 minutes where useful. Use realistic fictional scenarios and synthetic information, observing activity completion without coaching.
+- Distribute organizer, invited-helper, and returning-participant scenarios across sessions; do not require everyone to test every role or capability. Avoid lengthy questionnaires and exhaustive demonstrations.
+- Observe understanding of the application's purpose, starting coordination, responding to requests, recognizing commitments and gaps, and distinguishing completion from overall resolution. Note repeated hesitation, confusion, consequential mistakes, assistance required, and perceived simplicity, especially among less confident smartphone users.
+- Record significant and recurring usability problems, prioritize barriers to important activities, improve, and conduct targeted retesting as appropriate.
+- This is a lightweight initial improvement round, not statistical validation, proof of universal accessibility, or a determination of live-use or release readiness. Q50 confirms live pilot size and duration.
+
+## Confirmed initial live pilot plan (Q50)
+
+- Following synthetic usability testing and satisfaction of applicable safeguards, begin with approximately three real family coordination arrangements over approximately four weeks. These are flexible starting targets, not rigid quotas.
+- Ideally include an older adult and at least two coordinating or assisting people per arrangement; do not require the older adult to use the application. Recruit genuine existing needs, with variation in circumstances, technology confidence, and assistance types where practical.
+- Observe ordinary recurring assistance, changes, commitments, gaps, and completion without manufactured activities or artificial live tasks. Accommodate reasonable changes in family circumstances.
+- Evaluate effort and confusion relative to existing methods, understanding of responsibilities and gaps, recurring arrangements and changes, useful visibility without excessive interaction, notification burden, confidence in statuses, and participation by occasional and non-user helpers.
+- Minimize burden through brief conversations or a few targeted questions, not extensive surveys or diaries. Collect only information reasonably necessary for evaluation.
+- Before live use, address applicable privacy, security, authorization, reliability, and operational safeguards, including representative authority and disputes relevant to actual participants.
+- Explain pilot status and the absence of emergency monitoring or guaranteed care. Ensure alternative coordination methods for essential assistance during outages and a realistic route for reporting significant problems.
+- Treat findings as preliminary, not conclusive effectiveness evidence. Q51 and Q52 confirm observable evaluation criteria.
+
+## Confirmed synthetic usability success criteria (Q51)
+
+Use three primary criteria:
+
+- Independent task completion: record independent completion, completion with assistance, or non-completion for assigned scenarios, approximate times, significant hesitation, confusion, and consequential errors. Do not require everyone to test everything; avoid coaching except to prevent distress or allow continuation.
+- Correct understanding: where relevant, participants understand requests, accepted responsibilities, unresolved needs, whether completion expressly included resolution, what is shared and with whom, and whether offline completion is pending or successfully shared. Understanding matters as much as executing an interface action.
+- Material problems addressed: identify, prioritize, correct, and retest barriers or consequential misunderstandings before affected functionality enters live use, especially risks of missed responsibilities, inaccurate completion, or inappropriate disclosure. Use targeted retesting; cosmetic issues and harmless hesitation do not automatically block further testing.
+
+Preliminary diagnostic benchmarks: generally record the first need within approximately five minutes and recognize attention items within approximately 30 seconds. These are not rigid pass/fail thresholds; consider technology confidence, accessibility needs, and reasons for delay. Favor individual observations and recurring patterns over statistical percentages in this small, varied sample.
+
+Use brief observation notes and a few follow-up questions, not extensive paperwork. Make clear that the application, not the participant, is being evaluated. Keep evaluation proportionate to early development.
+
+## Confirmed live-pilot success criteria (Q52)
+
+Evaluate four outcomes without rigid numerical thresholds:
+
+- Reduced coordination effort: seek concrete examples of less chasing, repeated messages, duplicate work, and uncertainty, as well as new frustration or work introduced by the application. Judge whether coordination is meaningfully easier overall without participant time logs, message counts, or diaries.
+- Clear coordination: participants understand commitments, gaps, changes, recurring exceptions, and responsibility completion versus overall need resolution. Prioritize confusion that could cause missed assistance or incorrect responsibility assumptions.
+- Dependable behavior: encountered features behave consistently and accurately. Do not misleadingly present offline information as current, lose pending completion silently, falsely imply sharing, or unexpectedly disclose unrelated sensitive information. Address material privacy, security, and reliability problems before expansion; serious unresolved problems require appropriate restrictions or pausing affected use.
+- Acceptable burden and trust: useful notifications, understandable sharing boundaries, minimal routine entry and configuration, and willingness to continue. Pay attention to occasional helpers and people with limited smartphone confidence.
+
+For each family, use a brief baseline conversation about existing coordination, approximately four weeks of ordinary use, an optional brief midpoint check-in, and a short closing conversation about benefits, frustrations, misunderstandings, and willingness to continue. Supplement only with limited, appropriate, authorized, privacy-conscious observations or reliability information. Avoid extensive questionnaires, unnecessary tracking, and burdensome reporting.
+
+Capabilities not naturally encountered remain unevaluated in live use, with synthetic and technical testing providing separate evidence. Findings from approximately three families over four weeks are preliminary, not statistically representative or definitive effectiveness evidence.
+
+Use concrete observations, recurring issues, participant experience, and material reliability findings to decide whether to cautiously expand, improve and retest, narrow capabilities that add more work than value, or pause or restrict live use. No rigid numerical success thresholds are established.
 
 ## Established project constraints
 
