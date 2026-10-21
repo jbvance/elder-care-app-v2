@@ -6,11 +6,21 @@
 - The user approved the requirements baseline as sufficiently complete to proceed toward specification.
 - `docs/requirements.md` preserves confirmed requirements, decision context, a consolidated scope summary, and evaluation criteria. Later explicit Q35–Q52 decisions supersede earlier exploratory scope language.
 - Root `GLOSSARY.md` contains domain terminology and remains unchanged.
-- The next phase is specification. `$to-spec` has NOT been invoked. No architecture, implementation, or application-code work has begun as part of this cleanup.
+- Step 19 — Technical Specification is complete and formally approved, including the refinements on implementation grouping, architecture simplicity, and decision timing. The Step 18 baseline was committed as 7216e58. No tickets, implementation, or new architectural decisions are authorized by this approval.
 
 ## Current stopping point
 
-Q52 is complete; no requirements question is pending. The user requested targeted documentation reconciliation before reviewing the result and creating their own Git checkpoint. Stop after reporting the cleanup. Do not invoke `$to-spec` or create the Git checkpoint on the user's behalf.
+Q52 and Step 19 are complete. The user formally approved `.scratch/elder-care-app-v2/spec.md`, titled "Elder Care App v2 MVP technical specification," including all 72 behavioral stories and the three targeted refinements. The authoritative specification retains its required `ready-for-agent` status and is included directly in Git; `.scratch` is not excluded, so no archival copy is necessary. The older `docs/technical-specification-review.md` is a pre-refinement review snapshot, not the approved specification or an exact archive of it. Approval is recorded here without changing the authoritative specification's contents or metadata. Its historical pending-review wording describes publication history and is superseded by this formal approval record.
+
+Stop after the Step 19 closeout commit. Plan the next phase with the user; do not invoke `$to-tickets` or `$implement`, modify application code, or silently finalize architectural choices. Consequential choices still require approval before dependent implementation tickets are finalized; live-use gates remain mandatory.
+
+## Confirmed Step 19 testing decision
+
+- Prefer a small number of high-level behavior-testing boundaries exercising cooperating components. Use focused tests for authorization enforcement, security, and offline reliability; interface restrictions alone do not establish authorization correctness.
+- Include acceptance criteria for simplicity, minimal user effort, clear statuses, no unnecessary confirmations, and no repeated entry of known information. Preserve optional steps, external commitments without repeat acceptance, simple needs without mandatory separate coordinators, and authorized one-action completion plus express resolution.
+- Keep automated correctness tests distinct from Q48–Q52 human usability evaluation. Automated behavior assertions do not establish that people understand or can easily use the application.
+- Use practical solo-developer techniques, minimal infrastructure, and few mocks. A smaller set of device-level checks covers navigation, accessibility, notifications, persistence, and sharing.
+- Specific test tools and backend architecture remain undecided. No existing coordination-test prior art was found in the Expo starter.
 
 ## Confirmed scope
 
@@ -30,10 +40,10 @@ Representative-based authorization is conditional intended MVP scope: validate a
 - Q52 outcomes: reduced effort, clear coordination, dependable behavior, and acceptable burden and trust. Use brief baseline and closing conversations and an optional midpoint check-in, without diaries or rigid numerical success thresholds.
 - Treat results as preliminary; capabilities not encountered naturally remain unevaluated in live use. Material unresolved problems require appropriate restrictions or pausing affected use. Maintain fallback coordination and a realistic significant-problem reporting route.
 
-## Next steps after user review and Git checkpoint
+## Next steps after Step 19 closeout
 
-1. Await explicit instruction to invoke `$to-spec`; baseline approval is not authorization to invoke it during this turn.
-2. During specification, define exact fields, access and resolution authority, recurrence patterns, corrections, notification defaults, sharing contents, offline conflict handling, acceptance tests, and technical choices without reopening settled scope unnecessarily.
+1. Await the user's instruction to plan the next phase; do not invoke ticketing or implementation workflows automatically.
+2. Resolve consequential open decisions documented in the approved specification before dependent implementation tickets are finalized, without reopening settled scope unnecessarily. No provider, database, authentication method, or synchronization architecture is selected by approval of this synthesis.
 3. Explicitly evaluate offline-completion development and testing implications.
 4. Track pre-live-use privacy, security, legal, retention/deletion, authorization, reliability, and operational conditions. Define dispute reviewers, protective actions, unresolved-concern handling, and representative safeguards. Validate supported launch scenarios and address material usability issues before live testing.
 
@@ -41,6 +51,6 @@ Representative-based authorization is conditional intended MVP scope: validate a
 
 - Simplicity, accessibility, low friction, minimal setup, and minimal administration are fundamental. The application should handle complexity so its users do not have to.
 - Do not reopen feature discovery unless a specific material gap prevents specification. If clarification is necessary, ask one question at a time.
-- Do not modify application code, begin architecture or implementation, or invoke `$to-spec` during documentation cleanup.
+- During closeout, do not modify application code, make architecture decisions, or begin ticketing or implementation.
 - Preserve confirmed requirements, useful historical context, and the glossary. Distinguish confirmed scope, deferred capabilities, conditional support, specification decisions, and launch gates.
 - Follow `AGENTS.md` and the configured domain, issue-tracker, and triage instructions when those activities apply.
