@@ -2,7 +2,7 @@
 
 Status: ready-for-agent
 
-Review state: Published synthesis awaiting user review. The status follows the installed to-spec workflow; it does not authorize tickets, implementation, or resolution of unapproved architecture choices.
+Review state: Step 19 formally approved at commit 5403bb4. Subsequent consumer-business-model and Supabase decisions are recorded below for user review. The required status does not authorize tickets, implementation, or unresolved architecture choices.
 
 Baseline: approved requirements Q1–Q52, committed as 7216e58, plus the subsequently approved Step 19 testing decision. Later explicit baseline decisions govern earlier exploratory language. Existing requirements and glossary remain authoritative; this synthesis does not replace them.
 
@@ -103,6 +103,11 @@ The 72 stories are behavioral requirements, not 72 independent features or imple
 
 ### Confirmed constraints and observable contracts
 
+- Approved post-Step-19 business boundary: independent direct-to-consumer coordination for individuals and families, not organizational customers or administrators such as healthcare organizations, hospitals, health plans, or agencies. Do not operate on behalf of HIPAA-covered entities or their business associates to manage patient information. This is business intent to avoid business-associate operation, not a legal conclusion. Individual professionals may participate in family-authorized assistance within this boundary.
+- Families may voluntarily record diagnoses, conditions, medications, dosages, physicians, appointments, mobility limitations, and care instructions where useful for coordination. Treat all such information as sensitive consumer health information. Do not require comprehensive profiles or medication lists, add dedicated dose management, tracking, clinical decision support, or monitoring, or weaken purpose-limited access and sharing.
+- Selected backend direction under ADR 0001: Supabase Cloud managed PostgreSQL is the authoritative shared datastore, with backend-enforced access controls using PostgreSQL row-level security where appropriate and controlled transactional server-side operations for consequential changes. Use a narrow authorized essential-information cache and durable offline completion with authorization revalidation, conflict handling, and duplicate prevention. Prefer managed services, minimal custom infrastructure, and low maintenance. No specific authentication method, schema, local library, notification infrastructure, or server-operation mechanism is selected.
+- Intended hosting is an ordinary paid Supabase plan, subject to contractual suitability validation before real health-related data. Written permission for this consumer-health use has not been received; ordinary hosting must not be represented as HIPAA-compliant. HIPAA-specific hosting is outside the budget. Use synthetic development data until legal, contractual, privacy, and security requirements are validated; an actual contractual restriction requires reconsidering hosting before live use.
+
 - Architecture simplicity is a guiding constraint: where multiple approaches satisfy the approved requirements, prefer lower ongoing maintenance, less custom infrastructure, fewer user-visible steps, and lower operational burden, without compromising privacy, security, reliability, or correctness. This is an evaluation criterion, not approval of a particular architecture or provider.
 
 - Target iOS and Android with Expo SDK 58, React Native, and TypeScript. Existing Expo Router navigation is a repository instruction. Do not repeat environment setup or treat the starter as existing care functionality.
@@ -124,13 +129,13 @@ The 72 stories are behavioral requirements, not 72 independent features or imple
 
 ### Consequential choices requiring user approval before implementation
 
-These choices are unresolved, not silently selected by this synthesis. No provider, database, API, or schema is prescribed.
+Supabase Cloud with managed PostgreSQL is now selected, qualified by ADR 0001. Remaining choices below are unresolved; no authentication method, API contract, schema, local storage library, or notification service is prescribed.
 
 Resolve consequential choices and obtain user approval before related implementation tickets are finalized. Foundational decisions affecting persistence, identity, authorization enforcement, consistency, offline durability, or recoverability must be resolved before dependent designs and tickets are finalized; they must not be postponed merely because live use is later. Other choices may be resolved progressively before their affected tickets are finalized, without reopening settled requirements.
 
 | Decision | Required evaluation and meaningful tradeoff |
 | --- | --- |
-| Backend, hosting, persistence, and collaboration architecture | Operational burden for a solo developer versus enforceable authorization, consistency, reliable updates, privacy controls, and service constraints. No managed or custom approach is approved. |
+| Backend, hosting, persistence, and collaboration architecture | Supabase Cloud managed PostgreSQL selected, subject to contractual suitability for consumer health information. Region, plan details, schema, server-operation mechanism, and collaboration delivery remain unresolved. Preserve low operations burden and backend-enforced consistency and access. |
 | Authentication, invitations, sessions, and recovery | Low setup and recovery friction versus identity assurance, lost-device protection, invitation disclosure, and shared-device risks. No provider or authentication method is approved. |
 | Access and authority model | Simple defaults versus sufficient distinction among participation management, practical/sensitive access, completion, resolution, and reported versus representative permission. Avoid an elaborate role matrix exposed to families. |
 | State transitions and concurrent changes | Define requests, commitments, cancellations, declined assistance, corrections, uncertain reports, and explicit resolution without hiding outstanding work. Decide race handling and behavior when resolution conflicts with remaining responsibilities. |
@@ -187,6 +192,7 @@ Automated tests can establish behavior and absence of mandatory redundant steps.
 - Application implementation, implementation tickets, deployment, and approval of unresolved architectural choices in this publication step.
 - Comprehensive chat, general family feeds, standalone general messaging, and advanced conversation organization.
 - Organizational staff administration, sophisticated shared-device management, and multiple coordination circles.
+- Organizational healthcare customers or administrators and operation on behalf of HIPAA-covered entities or business associates for patient-information management; HIPAA-specific infrastructure and speculative enterprise architecture.
 - Dedicated medical, financial, or legal repositories and comprehensive personal-record management.
 - Dedicated medication-dose reminders, structured dose tracking, clinical administration histories, pharmacy integrations, automatic refill management, treatment advice, and clinical monitoring.
 - Offline acceptance, reassignment, shared-information editing, comprehensive offline operation, or complex general-purpose synchronization.
@@ -203,7 +209,7 @@ These are conditions to satisfy before live use, distinct from the design decisi
 
 These timing and simplicity clarifications add no capabilities or technical subsystems and do not change approved MVP boundaries, testing decisions, or launch gates.
 
-1. Evaluate actual privacy, security, legal, and data-use obligations for supported scenarios before live testing or release. This specification makes no legal compliance determination.
+1. Before processing real personal or health-related information, evaluate legal, privacy, security, and data-use obligations, including HIPAA applicability, the FTC Health Breach Notification Rule, relevant state laws, and vendor contractual requirements. Use synthetic development data until validation. No legal compliance determination follows from consumer positioning. Obtain written Supabase confirmation of contractual suitability for the intended ordinary paid-plan consumer-health use before processing real health-related data; actual restrictions require reconsideration of hosting, not an insecure shortcut or an assumption that HIPAA-specific hosting is affordable. All other live-use gates remain applicable.
 2. Define and validate sufficient authorization and authority scope, sensitive information boundaries, withdrawal, and protection against incidental disclosure. Ordinary reported permission must not imply verified legal consent.
 3. Identify who reviews significant authorization concerns, available proportionate restrictions, unresolved-case handling, and realistic response capacity. Do not promise immediate intervention or legal adjudication. Ordinary corrections remain outside formal review.
 4. Validate representative-based authorization, state/authority-type considerations, changed or expired authority, and secure purpose-limited supporting-document handling if needed. If not feasible, explicitly narrow supported live scenarios; do not use unsupported claims as a shortcut.
@@ -217,9 +223,10 @@ These timing and simplicity clarifications add no capabilities or technical subs
 
 The MVP is substantial despite a deliberately simple experience. Offline completion combines durability, authorization changes, concurrency, and user-understandable recovery. Recurrence combines series and occurrence history with time zones. Purpose-limited access must cover free text, comments, retained device data, notifications, and external summaries without exposing a burdensome permissions system. Representative review creates a real operational dependency, not just another screen.
 
-No existing ADRs were found during synthesis and no conflict with the approved baseline was identified. No architecture ADR is created because unresolved technical choices have not been approved. The specification preserves those approval points and launch gates; publication and the skill-required triage status do not constitute approval to implement. Stop for user review before tickets or implementation.
+No ADRs existed at original synthesis. ADR 0001 now records the selected Supabase direction and its contractual qualification. The consumer-only decision explicitly supersedes earlier exploration of organizational customers; it does not remove individual caregiver participation or authorize clinical features. No conflict with an existing ADR was identified. Remaining approval points and launch gates are preserved; the required triage status does not authorize implementation.
 
 ## Comments
 
 - Published using the installed to-spec template after the user approved the testing boundaries and simplicity acceptance requirements. No application code was modified.
 - Following independent review, clarified behavioral-story grouping, architecture simplicity, and decision timing. All 72 stories, substantive requirements, testing decisions, and launch gates are preserved. Final user approval remains pending.
+- The user subsequently approved Step 19, committed as 5403bb4. Post-approval decisions select consumer-only operation and qualified Supabase hosting; the 72 stories and existing testing approach remain unchanged. Earlier pending-review comments are historical.

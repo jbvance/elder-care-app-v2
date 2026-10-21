@@ -17,6 +17,17 @@ Later explicit decisions in Q35–Q52 govern MVP scope where they refine earlier
 
 Simplicity, accessibility, minimal setup, and minimal administrative effort govern every capability. Features must not impose a rigid sequence, duplicate acceptance, mandatory separate coordinators, or universal double-confirmation.
 
+## Approved consumer business model and health information
+
+This post-Step-19 decision refines the Q1–Q52 baseline: Elder Care App v2 is an independent direct-to-consumer application for individuals and families. Healthcare organizations, hospitals, health plans, and care agencies are not supported organizational customers or administrators. The application will not operate on behalf of HIPAA-covered entities or their business associates to manage patient information; the business model is deliberately structured to avoid becoming a HIPAA business associate. This intent is not a determination of legal applicability or contractual permission.
+
+- Families may voluntarily enter useful coordination information, including diagnoses, medical conditions, medications, dosages, physicians' names, appointment details, mobility limitations, and practical care instructions. Treat it as sensitive consumer health information even where HIPAA does not apply.
+- Entry remains optional, purpose-relevant, gradual, and appropriately authorized; do not require comprehensive medical profiles or medication lists. Minimize unnecessary collection, exposure, retention, and sharing without burdening ordinary users.
+- Permitting medication names or dosages in notes does not authorize dedicated medication management, dose reminders, structured dose tracking, clinical decision support, or professional medical monitoring. Existing coordination and privacy boundaries remain in force.
+- Do not introduce organizational healthcare functionality, HIPAA-specific infrastructure, or speculative enterprise architecture. Individual professionals may still participate in family-authorized assistance; this does not establish an organizational customer or an on-behalf-of healthcare arrangement.
+- Before processing real personal or health-related information, evaluate applicable legal and privacy obligations, including HIPAA applicability, the FTC Health Breach Notification Rule, relevant state laws, and vendor contracts. Consumer positioning is not an exemption from health-information privacy obligations.
+- Use synthetic data during development until legal, contractual, privacy, and security requirements have been validated. Supabase Cloud with managed PostgreSQL is the selected backend direction under ADR 0001, subject to contractual suitability before real health-related data processing. An ordinary paid plan is intended; written confirmation permitting this use has not been received. Do not claim ordinary hosting is HIPAA-compliant or infer contractual permission from HIPAA non-applicability. HIPAA-specific hosting is outside the budget; an actual contractual restriction requires reconsideration before live use.
+
 ## Purpose
 
 Help family members, friends, and other trusted individuals coordinate dependable assistance for older adults with daily needs, while preserving dignity, autonomy, independence, and quality of life. Reduce miscommunication, duplicated work, missed responsibilities, uncertainty about responsibilities, and stress.
@@ -59,7 +70,7 @@ Simplicity, low-friction interaction, and ease of adoption are paramount across 
 - Explore coordination with individual paid caregivers and professional service providers alongside informal helpers, including recurring home visits.
 - Distinguish access for an individual professional from organizational functionality involving employees, administrators, and changing staff assignments.
 - Individual professionals may participate in ordinary authorized coordination within the core MVP; this does not include organizational administration or specialized clinical workflows (Q35, Q40).
-- Evaluate home care agencies and other organizations separately during MVP prioritization. Full organizational functionality is not a confirmed MVP requirement.
+- Earlier exploration of organizational participation is superseded by the approved consumer-only business model: agencies and other healthcare organizations are not supported customers or administrators. Individual professional participation remains subject to family authorization and the consumer-use boundary.
 - Explore consent, privacy, responsibilities, access boundaries, and additional professional-care scenarios. Coordination participation alone must not confer medical decision-making authority, broad sensitive-information access, or authority to act on the older adult's behalf.
 
 ## Illustrative appointment assistance workflow
@@ -381,7 +392,7 @@ Caching, storage, and synchronization architectures remain undecided. Favor simp
 - Explore occasional family device sharing without confused identities or inappropriate information exposure. Do not assume each participant owns or regularly uses a separate smartphone.
 - Prevent inadvertent exposure of another participant's or care relationship's information on a shared device; address residual sessions, sensitive notifications, and retained information with appropriate safeguards.
 - Avoid cumbersome account-switching or authentication procedures in ordinary use.
-- Sophisticated regular shared-device support is deferred; distinct identities, assisted participation, and protection against incidental shared-device disclosure remain requirements. Professional shared-work-device management belongs with separate organizational evaluation.
+- Sophisticated regular shared-device support is deferred; distinct identities, assisted participation, and protection against incidental shared-device disclosure remain requirements. Organizational shared-work-device management is outside the approved consumer-only scope.
 - Authentication methods, account-switching mechanisms, and device-management architecture remain undecided.
 
 ## Identity recovery and coordination continuity

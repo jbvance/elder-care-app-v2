@@ -12,7 +12,16 @@
 
 Q52 and Step 19 are complete. The user formally approved `.scratch/elder-care-app-v2/spec.md`, titled "Elder Care App v2 MVP technical specification," including all 72 behavioral stories and the three targeted refinements. The authoritative specification retains its required `ready-for-agent` status and is included directly in Git; `.scratch` is not excluded, so no archival copy is necessary. The older `docs/technical-specification-review.md` is a pre-refinement review snapshot, not the approved specification or an exact archive of it. Approval is recorded here without changing the authoritative specification's contents or metadata. Its historical pending-review wording describes publication history and is superseded by this formal approval record.
 
-Stop after the Step 19 closeout commit. Plan the next phase with the user; do not invoke `$to-tickets` or `$implement`, modify application code, or silently finalize architectural choices. Consequential choices still require approval before dependent implementation tickets are finalized; live-use gates remain mandatory.
+Step 19 closeout was accepted at commit 5403bb4; the obsolete review copy was subsequently deleted. Foundational architecture planning has resumed, limited to documenting the two approved decisions below. Stop for user review without committing, invoking `$to-tickets` or `$implement`, changing application code, or selecting other unresolved technologies. Consequential choices require approval before dependent tickets are finalized; live-use gates remain mandatory.
+
+## Approved post-Step-19 decisions
+
+- Consumer-only business model: individuals and families are customers; no healthcare organization, hospital, health plan, or care agency customers/administrators, and no operation on behalf of HIPAA-covered entities or business associates for patient-information management. Individual professionals may participate in family-authorized coordination; that is not organizational use. This explicitly supersedes earlier organizational-customer exploration.
+- Permit voluntary diagnoses, conditions, medication names and dosages, physician names, appointments, mobility limitations, and practical care instructions where useful. Treat these as sensitive consumer health information without requiring comprehensive profiles or expanding into dose reminders, structured tracking, clinical decisions, or monitoring.
+- Supabase Cloud managed PostgreSQL is selected as the backend direction under ADR 0001: authoritative shared data, backend enforcement with row-level security where appropriate, controlled transactional operations, narrow authorized local information, and durable offline completion with revalidation, conflict handling, and duplicate prevention.
+- Ordinary paid hosting is intended; written Supabase confirmation permitting this consumer-health use has not been received. HIPAA-specific hosting is outside the budget. Do not claim ordinary hosting is HIPAA-compliant or infer contractual permission from HIPAA non-applicability. An actual restriction requires reconsidering hosting before live use.
+- Use synthetic development data until legal, contractual, privacy, and security requirements are validated. Before real personal or health-related processing, evaluate HIPAA applicability, the FTC Health Breach Notification Rule, state laws, and vendor contracts. Consumer positioning is not a legal exemption.
+- Authentication methods, schema, local storage libraries, notification infrastructure, and other implementation choices remain open. Managed services and minimal maintenance must preserve simplicity and all existing safeguards.
 
 ## Confirmed Step 19 testing decision
 
@@ -20,7 +29,7 @@ Stop after the Step 19 closeout commit. Plan the next phase with the user; do no
 - Include acceptance criteria for simplicity, minimal user effort, clear statuses, no unnecessary confirmations, and no repeated entry of known information. Preserve optional steps, external commitments without repeat acceptance, simple needs without mandatory separate coordinators, and authorized one-action completion plus express resolution.
 - Keep automated correctness tests distinct from Q48–Q52 human usability evaluation. Automated behavior assertions do not establish that people understand or can easily use the application.
 - Use practical solo-developer techniques, minimal infrastructure, and few mocks. A smaller set of device-level checks covers navigation, accessibility, notifications, persistence, and sharing.
-- Specific test tools and backend architecture remain undecided. No existing coordination-test prior art was found in the Expo starter.
+- Specific test tools remain undecided. The backend direction is now selected in ADR 0001, subject to contractual validation; detailed architecture choices remain open. No existing coordination-test prior art was found in the Expo starter.
 
 ## Confirmed scope
 
@@ -43,7 +52,7 @@ Representative-based authorization is conditional intended MVP scope: validate a
 ## Next steps after Step 19 closeout
 
 1. Await the user's instruction to plan the next phase; do not invoke ticketing or implementation workflows automatically.
-2. Resolve consequential open decisions documented in the approved specification before dependent implementation tickets are finalized, without reopening settled scope unnecessarily. No provider, database, authentication method, or synchronization architecture is selected by approval of this synthesis.
+2. Review these documentation changes, then resolve remaining consequential decisions before dependent tickets are finalized. Supabase Cloud/PostgreSQL is selected with contractual qualification; no authentication method, schema, local library, or detailed synchronization architecture is selected. Obtain required contractual confirmation and validate applicable obligations before real-data use.
 3. Explicitly evaluate offline-completion development and testing implications.
 4. Track pre-live-use privacy, security, legal, retention/deletion, authorization, reliability, and operational conditions. Define dispute reviewers, protective actions, unresolved-concern handling, and representative safeguards. Validate supported launch scenarios and address material usability issues before live testing.
 
@@ -51,6 +60,6 @@ Representative-based authorization is conditional intended MVP scope: validate a
 
 - Simplicity, accessibility, low friction, minimal setup, and minimal administration are fundamental. The application should handle complexity so its users do not have to.
 - Do not reopen feature discovery unless a specific material gap prevents specification. If clarification is necessary, ask one question at a time.
-- During closeout, do not modify application code, make architecture decisions, or begin ticketing or implementation.
+- During this documentation task, record only the two expressly approved decisions; do not modify application code, choose additional technologies, commit, or begin ticketing or implementation.
 - Preserve confirmed requirements, useful historical context, and the glossary. Distinguish confirmed scope, deferred capabilities, conditional support, specification decisions, and launch gates.
 - Follow `AGENTS.md` and the configured domain, issue-tracker, and triage instructions when those activities apply.
