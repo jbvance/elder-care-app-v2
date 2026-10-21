@@ -14,6 +14,18 @@ Q52 and Step 19 are complete. The user formally approved `.scratch/elder-care-ap
 
 Step 19 closeout was accepted at commit 5403bb4; the obsolete review copy was subsequently deleted. Foundational architecture planning has resumed, limited to documenting the two approved decisions below. Stop for user review without committing, invoking `$to-tickets` or `$implement`, changing application code, or selecting other unresolved technologies. Consequential choices require approval before dependent tickets are finalized; live-use gates remain mandatory.
 
+## Current authentication planning decision
+
+The consumer-only model and qualified Supabase backend decision were committed as bfaf436. The user now approves Supabase Auth emailed one-time codes as primary, with securely retained sessions; passwords and passkeys are deferred. ADR 0002 records the decision. This documentation update is uncommitted and awaits review; no ticketing or implementation is authorized.
+
+Learning and appropriate private preparation need not require authentication where practical. Protected shared access and collaborative actions require authentication plus separate backend authorization. Preserve stable identity across email/device/care relationships, minimal invitation disclosure, joining separate from responsibility acceptance, and account-free recording of outside helpers.
+
+Original-email recovery uses ordinary codes. Invitation authorization, lost-email recovery, email changes, exceptional verification, exact session/storage/revocation and OTP settings, additional verification for sensitive actions, and transactional email vendor remain open for separate review. Plan secure mobile retention, sign-out and lost/shared-device protections, and actual Expo iOS/Android code-flow testing during implementation. OTP is not phishing-resistant or MFA. ADR 0001's legal, contractual, consumer-health, and synthetic-data conditions remain in force.
+
+ADR 0003 now records the approved invitation/joining boundary: expiring, revocable designated-recipient invitations, ordinarily by email, with authenticated backend checks of recipient eligibility, invitation validity, and current inviter authority. Forwarded links alone grant no sensitive access. Joining is distinct from responsibility acceptance and does not establish legal authority or broader access. Keep disclosure minimal in emails, URLs, previews, and unauthenticated screens; request details follow appropriate authorization. Different-email users obtain a corrected invitation securely, not a bypass. Inbox control does not independently establish real-world identity or legal authority. Maintain relationship-specific access and account-free outside-helper recording with minimal routine administration.
+
+Exact matching rules, expiration duration, revocation mechanics, and detailed authorization policies remain unresolved. ADR 0002, ADR 0003, and their specification/checkpoint changes remain uncommitted pending review. Stop for review; do not commit, ask a further decision, or begin implementation.
+
 ## Approved post-Step-19 decisions
 
 - Consumer-only business model: individuals and families are customers; no healthcare organization, hospital, health plan, or care agency customers/administrators, and no operation on behalf of HIPAA-covered entities or business associates for patient-information management. Individual professionals may participate in family-authorized coordination; that is not organizational use. This explicitly supersedes earlier organizational-customer exploration.
@@ -21,7 +33,7 @@ Step 19 closeout was accepted at commit 5403bb4; the obsolete review copy was su
 - Supabase Cloud managed PostgreSQL is selected as the backend direction under ADR 0001: authoritative shared data, backend enforcement with row-level security where appropriate, controlled transactional operations, narrow authorized local information, and durable offline completion with revalidation, conflict handling, and duplicate prevention.
 - Ordinary paid hosting is intended; written Supabase confirmation permitting this consumer-health use has not been received. HIPAA-specific hosting is outside the budget. Do not claim ordinary hosting is HIPAA-compliant or infer contractual permission from HIPAA non-applicability. An actual restriction requires reconsidering hosting before live use.
 - Use synthetic development data until legal, contractual, privacy, and security requirements are validated. Before real personal or health-related processing, evaluate HIPAA applicability, the FTC Health Breach Notification Rule, state laws, and vendor contracts. Consumer positioning is not a legal exemption.
-- Authentication methods, schema, local storage libraries, notification infrastructure, and other implementation choices remain open. Managed services and minimal maintenance must preserve simplicity and all existing safeguards.
+- ADR 0002 now selects Supabase Auth email codes with secure session retention. Schema, local storage libraries, notification infrastructure, and other unresolved choices remain open. Managed services and minimal maintenance must preserve simplicity and safeguards.
 
 ## Confirmed Step 19 testing decision
 
@@ -52,7 +64,7 @@ Representative-based authorization is conditional intended MVP scope: validate a
 ## Next steps after Step 19 closeout
 
 1. Await the user's instruction to plan the next phase; do not invoke ticketing or implementation workflows automatically.
-2. Review these documentation changes, then resolve remaining consequential decisions before dependent tickets are finalized. Supabase Cloud/PostgreSQL is selected with contractual qualification; no authentication method, schema, local library, or detailed synchronization architecture is selected. Obtain required contractual confirmation and validate applicable obligations before real-data use.
+2. Review ADR 0002 and resolve remaining consequential decisions before dependent tickets are finalized. Supabase Cloud/PostgreSQL and email-code authentication are selected; schema, local library, detailed synchronization, invitation authorization, exceptional recovery, and session policies remain open. Obtain contractual confirmation and validate applicable obligations before real-data use.
 3. Explicitly evaluate offline-completion development and testing implications.
 4. Track pre-live-use privacy, security, legal, retention/deletion, authorization, reliability, and operational conditions. Define dispute reviewers, protective actions, unresolved-concern handling, and representative safeguards. Validate supported launch scenarios and address material usability issues before live testing.
 
