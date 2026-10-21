@@ -10,6 +10,22 @@
 
 ## Current stopping point
 
+ADR 0007 now records approved limited default Helper scope plus authorized discovery of additional unclaimed assistance opportunities. ADR 0006 and its pending changes are preserved. Both ADRs and specification/checkpoint updates remain uncommitted for review. Latest committed architecture checkpoint remains 52f0191. Stop after documentation summary, conflicts, and verification; no further question, ticketing, implementation, or commit this turn.
+
+## Current Helper scope decision
+
+Helpers ordinarily see only explicitly available authorized needs, responsibilities, and practical information, not all arrangement needs or restricted background by joining. Ongoing scope can cover recurring and other ordinary ongoing involvement without repeated authorization. Authorized Coordinators can make suitable unclaimed opportunities available to selected Helpers or authorized Helper audiences without assigning each responsibility. Visibility is not commitment; Helpers may volunteer or accept under existing rules without arrangement-wide access.
+
+Follow ADR 0005 information audiences, relationship-specific backend enforcement, older-adult preferences, and applicable authority. Provide enough authorized practical context without unrelated sensitive disclosure. Avoid a third preset, marketplace, new coordination circles, and repetitive permission administration. Exact scope interactions, opportunity defaults, audience labels, and implementation mechanisms remain open.
+
+Latest checkpoint: 52f0191 committed ADRs 0004 and 0005. The user now approves the Helper/Coordinator decision recorded in ADR 0006, with specification and checkpoint updates pending review and commit. Earlier statements below about uncommitted ADRs 0004–0005 are historical and superseded by this checkpoint. Do not commit, invoke `$to-tickets`, create tickets, or implement. Continue one consequential decision at a time after reporting this update.
+
+## Current participation preset decision
+
+ADR 0006 selects Helper and Coordinator; occasional/ongoing assistance is authorized scope, not a third preset. Helpers perform authorized assistance and suggest changes without broader management. Coordinators arrange assistance and resolve needs within authorized scope and may also help. Participation management, restricted-background access, external disclosure, and exceptional Helper resolution remain distinguishable and appropriately controlled. Established permission should let the initial authorized Coordinator invite simply without redundant administrative approvals; private creation itself grants no sharing authorization.
+
+No older-adult preset is needed; effective preferences and authority are independent of involvement. Regular helping does not broaden access, recurring scope avoids redundant grants, and permissions remain independent across older adults. Non-users need no preset/account. Preserve combined completion/resolution when both permissions apply, ADR 0005 audiences, delegation limits, and all existing live-data gates. Exact scopes, audience defaults, delegation interactions, schema, and enforcement remain open.
+
 Latest approved architecture checkpoint: effa022 committed ADRs 0002 and 0003 with specification/checkpoint updates. The user approved the directions recorded in ADR 0004 (relationship-specific authorization) and ADR 0005 (contextual information audiences). Both ADRs and associated specification/checkpoint changes remain pending review and commit; preserve them without staging or committing. Stop after reporting documentation changes and Git status. No tickets, implementation, or further decision question is authorized for this turn. Earlier pending-review references below describe prior checkpoints and do not reopen committed decisions.
 
 ## Current authorization decision
