@@ -10,6 +10,16 @@
 
 ## Current stopping point
 
+Latest committed checkpoint: 3771d1f approved ADR 0008. Pending ADR 0009 documents the approved state/concurrency architecture and now the approved first-valid-committed acceptance rule for available single-person responsibilities. Its specification/checkpoint updates remain uncommitted pending review. Preserve earlier decisions; historical statements below do not reopen committed ADRs. Stop after summary, conflict report, and Git status; no further decision question, commit, tickets, or implementation.
+
+## Current coordination-state decision
+
+Preserve conceptual need/request/responsibility/commitment/report/resolution distinctions. Current backend authorization and invariant checks govern consequential atomic operations. Prevent unintended conflicting single-person commitments, preserve deliberate multi-person help, reject materially stale actions without needless unrelated conflicts, and deduplicate retries. Changes and corrections retain provider/recorder attribution and history and reveal gaps; proposals never imply accepted replacement.
+
+Completion remains a claim, never automatic resolution. Authorized one-action completion plus express resolution records both outcomes atomically without silently dismissing outstanding work. Keep recurring occurrences/history distinct and offline completion provisional until backend checks accept it. Avoid unrestricted client updates, last-write-wins, full event sourcing, workflow engines, and unnecessary confirmation burden; review operation permissions/security context. Material-change rules, resolution with outstanding work, labels, schema, transaction mechanisms, detailed interfaces, APIs, and unusual conflict cases remain open.
+
+Single-person acceptance is now settled: first valid acceptance committed by the backend secures an explicitly available exclusive responsibility, after current authorization, availability, state, performer restrictions, preferences, and authority checks. Respect existing valid commitments including outside agreements. Competing attempts get a simple already-arranged outcome; successful lost-response retries return the prior result without duplication or bypassing current access. Interest alone is not acceptance. Preserve deliberate multi-person help and separate completion/resolution; no mandatory Coordinator approval or redundant ordinary confirmation.
+
 Latest committed checkpoint: e1ca19d approved ADRs 0006–0007 and associated documentation. ADR 0008 now records the user's approved context-based visibility defaults with specification/checkpoint updates, pending review and commit. Earlier uncommitted references below are historical. Stop after summary, conflict report, and Git status; do not commit, ask another decision, invoke `$to-tickets`, create tickets, or implement.
 
 ## Current visibility-default decision
