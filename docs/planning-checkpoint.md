@@ -10,6 +10,14 @@
 
 ## Current stopping point
 
+Latest committed checkpoint: e1ca19d approved ADRs 0006–0007 and associated documentation. ADR 0008 now records the user's approved context-based visibility defaults with specification/checkpoint updates, pending review and commit. Earlier uncommitted references below are historical. Stop after summary, conflict report, and Git status; do not commit, ask another decision, invoke `$to-tickets`, create tickets, or implement.
+
+## Current visibility-default decision
+
+ADR 0008: new needs ordinarily remain in their authorized coordination context unless an applicable Helper audience is explicitly established. Appropriate new needs and recurring occurrences automatically inherit deliberately authorized ongoing audiences/scopes without repeated ordinary selection. Coordinators retain visibility into unresolved work within their authorized scope even when no Helper audience applies; otherwise an opportunity can be made available through one simple choice.
+
+Helpers remain limited to authorized opportunities and practical context. Relevant health information may be included appropriately; restricted background remains separately protected. Comments/context follow their audience, and consequential broadening must make existing disclosure understandable without redundant confirmations. Explain visibility plainly without per-field classification. Preserve distinctions between visibility, acceptance, completion, and express resolution. Apply backend and downstream controls, older-adult preferences, authority, and all prior gates. Exact labels, interactions, database representation, and enforcement remain open; no new presets, hierarchies, marketplace, or configuration system.
+
 ADR 0007 now records approved limited default Helper scope plus authorized discovery of additional unclaimed assistance opportunities. ADR 0006 and its pending changes are preserved. Both ADRs and specification/checkpoint updates remain uncommitted for review. Latest committed architecture checkpoint remains 52f0191. Stop after documentation summary, conflicts, and verification; no further question, ticketing, implementation, or commit this turn.
 
 ## Current Helper scope decision
