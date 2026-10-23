@@ -10,6 +10,16 @@
 
 ## Current stopping point
 
+Latest committed checkpoint: 1837452 approved ADR 0010. ADR 0011 now records approved hybrid recurring arrangements with rolling individual occurrences, with specification/checkpoint changes uncommitted pending review. Earlier pending references below are historical. Stop after summary, conflicts, preservation checks, and Git status; do not commit, ask another decision, invoke `$to-tickets`, create tickets, or implement.
+
+## Current recurring-assistance architecture
+
+Use ongoing arrangements with stable occurrences generated over a bounded rolling future window, extended as needed. Preserve consequential commitments, exceptions, reports, unresolved history, and corrections under existing retention gates. A schedule is not acceptance; ongoing commitments, including attributed outside agreements, ordinarily cover agreed occurrences after one acceptance.
+
+Keep one-occurrence exceptions independent from future commitments and show needed replacement gaps. Future edits preserve history and exceptions; material changes cannot silently expand agreement. Generation is duplicate-safe and identity-preserving, with reliable catch-up after inactivity/failure. Correctness and unattended reminders must not rely solely on mobile opening; a shared lightweight backend mechanism may be needed, not per-arrangement schedulers. Preserve local wall time and named zone; resolve ambiguous/nonexistent-time policies before implementation. Completion is not resolution, and one resolved occurrence does not end the series.
+
+Preserve ADRs 0001–0010, audiences, authority, first-valid acceptance, transactions, offline limits, testing, and live-data gates. Exact patterns, generation window/mechanism, renewed-agreement rules, daylight-saving policies, schema, and implementation remain open. No libraries, scheduler technology, or extra capabilities are selected.
+
 Latest committed checkpoint: 41b1459 approved contextual resolution in ADR 0009. ADR 0010 now records the user's approved limited offline architecture, with specification/checkpoint changes uncommitted pending review. Earlier pending references below are historical. Stop after summary, conflicts, and Git status; do not commit, ask another decision, create tickets, invoke `$to-tickets`, or implement.
 
 ## Current offline architecture decision
