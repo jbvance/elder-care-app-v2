@@ -8,7 +8,23 @@
 - Root `GLOSSARY.md` contains domain terminology and remains unchanged.
 - Step 19 — Technical Specification is complete and formally approved, including the refinements on implementation grouping, architecture simplicity, and decision timing. The Step 18 baseline was committed as 7216e58. No tickets, implementation, or new architectural decisions are authorized by this approval.
 
-## Current stopping point
+## Current project status
+
+The requirements, technical specification, and ADRs 0001–0011 are approved; 5b01f4b is the preceding architecture checkpoint. The concrete authorization contract is approved as written and documented in the authoritative specification. This documentation commit closes its review. The project is Ready With Limited Prerequisites for `$to-tickets` drafting, which is the next phase after this commit; no further broad architecture phase or new ADR is required.
+
+Historical stopping instructions and pending-review statements retained below describe earlier sessions and are superseded by this current status. They do not prohibit this approved documentation commit or the subsequent ticket-drafting phase. This closeout operation stops after its Git report without invoking `$to-tickets`, generating tickets, or starting implementation.
+
+## Approved authorization contract and next phase
+
+The specification's "Approved authorization contract" defines Helper/Coordinator defaults, independent scope/audience/delegation checks, and positive/negative backend acceptance criteria. Onward participation-management delegation requires explicit authority; Coordinators may select/reuse/narrow already authorized practical audiences, while expansion/restricted disclosure requires applicable authority. Authorized Coordinator commitment changes preserve history/notice and never imply renewed acceptance. External sharing remains separate from preset, with appropriate initial practical-summary authority granted through ordinary authorization; Helpers have no general sharing authority by default.
+
+Preserve private preparation without inferred disclosure permission, reported permission without claims of legal verification, older-adult authority, conditional representatives, contextual sensitive free text without automatic-detection guarantees, non-user helpers, and backend-validated offline acceptance. Prior requirements and ADRs 0001–0011 are unchanged.
+
+The next activity after this documentation commit is `$to-tickets` drafting, not another broad architecture phase. Remaining bounded identity/session recovery, offline lifecycle/storage, material-change/recurrence edges, notification/sharing delivery, and concrete enforcement choices must be resolved during ticket review before dependent tickets are finalized. Legal/contractual and operational gates remain mandatory before affected real-data/live use. No substantive contradiction currently prevents drafting.
+
+## Historical checkpoints and retained decision context
+
+The following records preserve earlier decision context. References to "current," uncommitted changes, or stopping instructions within this historical section apply to their original checkpoints, not the current project status above.
 
 Latest committed checkpoint: 1837452 approved ADR 0010. ADR 0011 now records approved hybrid recurring arrangements with rolling individual occurrences, with specification/checkpoint changes uncommitted pending review. Earlier pending references below are historical. Stop after summary, conflicts, preservation checks, and Git status; do not commit, ask another decision, invoke `$to-tickets`, create tickets, or implement.
 

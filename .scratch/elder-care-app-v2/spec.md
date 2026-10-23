@@ -175,6 +175,59 @@ The 72 stories are behavioral requirements, not 72 independent features or imple
 - Ordinary medication assistance uses ordinary coordination; it neither requires a medication list nor establishes dose ingestion or clinical verification.
 - Participation ending and closure do not automatically erase useful shared history. Contributors cannot automatically delete shared records. Retention and deletion policies remain launch decisions, including backup, device, and external-copy limitations.
 
+### Approved authorization contract
+
+This contract makes ADRs 0003–0008 concrete without adding presets or an authorization framework. Every protected action requires authentication, currently valid authorization, applicable arrangement/need/responsibility or ongoing scope, the information's authorized audience, and the relevant preset capability or separate delegation. State and concurrency checks also apply. Authentication is not participation, legal authority, acceptance, or permission to disclose.
+
+| Dimension | Enforced meaning |
+| --- | --- |
+| Preset | Helper or Coordinator supplies ordinary action defaults, not legal standing. |
+| Scope | The older adult and applicable needs, responsibilities, or authorized ongoing involvement; no cross-arrangement inheritance. |
+| Audience | Who may receive practical/contextual or separately restricted background information. Reading does not authorize modification or disclosure. |
+| Separate authority | Consequential powers explicitly granted within applicable authorization; no participant may grant beyond their own delegated scope and powers. |
+
+| Ordinary capability | Helper default | Coordinator default, within authorized coordination scope |
+| --- | --- | --- |
+| Read practical information/comments | Authorized scope and audience only | Authorized scope and audience only |
+| Discover opportunities | Only appropriately available opportunities | Relevant needs and gaps, including those not available to Helpers |
+| Respond, accept/decline, report own completion/unavailability | Eligible responsibilities; interest is not acceptance | Same Helper capabilities |
+| Suggest needs/changes | May suggest without changing others' commitments | May suggest or manage as authorized |
+| Create/manage needs, request help, arrange replacements | No general management permission | Permitted; requests/proposals do not establish acceptance |
+| Record outside agreements/completion | No ordinary default | Permitted with separate provider/recorder attribution |
+| Expressly resolve needs | Specific limited delegation required | Permitted within authorized coordination scope, independently enforceable |
+
+Separately controlled consequential permissions:
+
+- Participation management requires delegation. It does not automatically permit onward delegation; further delegation requires an appropriate explicit grant within the delegator's authorized powers. Neither self-escalation nor unrestricted grant through preset changes is permitted.
+- Restricted-background access requires separate information authorization; Coordinator status or invitation management does not provide it.
+- Authorized Coordinators may select, reuse, or narrow already authorized practical audiences. New audiences or restricted-background disclosure require applicable disclosure authority. Consider existing contextual content when broadening; do not force per-field/comment/sentence classification.
+- Appropriately authorized Coordinators may modify/cancel others' commitments within coordination scope, with this authority separately enforceable from participation management and resolution. Preserve attribution/history and appropriate notice; do not silently establish acceptance of new or materially changed commitments.
+- Need resolution requires its own applicable capability. Permit combined completion/express resolution when both permissions apply, preserving outstanding work and separately authorized cancellation under ADR 0009.
+- External disclosure is separate from Coordinator status. An initial authorized Coordinator may receive ordinary practical-summary sharing authority through established initial authorization without repeated setup. Require purpose-limited authorized disclosure and clear review of selected information before sharing. Helpers have no general external-disclosure authority by default; appropriate limited grants are possible. Reading alone never establishes sharing permission.
+
+Scope, setup, and information rules:
+
+- Preserve low-friction private preparation, including without authentication where practical. Creating a private arrangement or need does not authorize disclosure. Record ordinary reported permission and applicable delegation simply; appropriate initial authorization can enable participation management and practical-summary disclosure without separate administrative approval rounds. Reported permission is not independently verified legal consent.
+- Apply ADRs 0007–0008 to limited Helper scope, available opportunities, and authorized ongoing audience inheritance without repetitive occurrence-level grants. Visibility is not commitment; regular helping alone expands nothing.
+- Practical instructions may contain relevant diagnoses, medications, dosages, physicians, and other authorized health information. Enforce separation from restricted background and contextual audiences, not automatic detection of sensitive statements inside otherwise authorized text. Descriptions and comments follow their applicable audience, understandable to the author. Do not claim automatic redaction or detection guarantees.
+- Older adults need no separate preset. Their legally effective preferences, permissions, withdrawal rights, and authority are independent of application involvement. Family relationships, account control, or presets establish no legal authority. Representative-based authorization remains conditional on validated safeguards; unsupported/disputed claims do not unlock access.
+- Non-user Helper records create no account, preset, invitation acceptance, or access. Preserve performer/recorder attribution.
+- Enforce current permissions in the backend. RLS controls record access but must not be assumed to hide restricted fields within readable records; use an enforceable information boundary. Review privileged operation authorization explicitly. Apply equivalent boundaries to notifications, offline copies, and external summaries. Offline reports may be saved locally within approved scope but are accepted only after current identity, authorization, state, conflict, and duplicate checks. Preserve limitations on retrieving prior disclosures and all existing cleanup/retention gates.
+
+Backend acceptance criteria (positive and negative):
+
+- Permit an eligible Helper's authorized practical read and responsibility acceptance; deny unrelated needs, restricted background, and direct attempts to retrieve restricted content through otherwise readable records or alternate endpoints.
+- Permit authorized Coordinator operations and properly scoped separate delegations; deny self-escalation, grants outside delegable powers, and onward participation-management delegation without an explicit applicable grant.
+- Deny cross-arrangement reads/writes absent independent authorization, including altered identifiers, direct requests bypassing screens, and access inferred solely from email, family status, preset, or another arrangement.
+- Permit appropriate valid recipient-bound joining; deny forwarded-link-only, expired, revoked, mismatched-recipient, or invalid-inviter-authority joins. Joining never accepts a responsibility or expands restricted access.
+- Permit completion-only reporting where resolution is unauthorized; permit authorized combined completion/resolution; deny unauthorized resolution/cancellation while preserving visible follow-up when resolution alone is allowed.
+- Enforce withdrawal/restrictions on subsequent backend access and actions, including requests carrying previously issued tokens. Do not rely on stale token permissions or hiding controls.
+- Apply ADR 0009 to concurrent consequential actions: one exclusive acceptance, no stale overwrite or duplicate records, and no resolution action silently disposing of another commitment. Recheck authorization within the controlled operation.
+- Accept valid pending completion after current checks; reject or return an appropriate non-shared outcome for unauthorized or materially conflicting reports without duplication, stale mutation, or inappropriate disclosure.
+- Permit authorized reviewed external summaries and destination-appropriate notification content; deny unauthorized broadening or external disclosure, including by a Helper without the relevant grant. Do not infer receipt, reading, or action from sending.
+
+These are enforceable contracts, not a family-facing permission matrix. Resolve detailed scope/audience representation, lifecycle/recovery, and other bounded choices during ticket review before affected tickets are finalized. Preserve the approved high-level testing and human evaluation, consumer-only model, synthetic-data development, and all contractual/privacy/security/live-use gates.
+
 ### Consequential choices requiring user approval before implementation
 
 Supabase Cloud with managed PostgreSQL is selected under qualified ADR 0001, and Supabase Auth email codes under ADR 0002. Remaining choices below are unresolved; no API contract, schema, local storage library, transactional email provider, or notification service is prescribed.
