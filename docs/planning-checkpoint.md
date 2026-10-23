@@ -10,6 +10,14 @@
 
 ## Current stopping point
 
+Latest committed checkpoint: 2614b5c approved ADR 0009's state/concurrency architecture and first-valid-acceptance rule. ADR 0009 now also records the user's approved contextual resolution behavior with specification/checkpoint updates, uncommitted pending review. Earlier pending references below are historical. Stop after summary, conflicts, and Git status; no further question, commit, ticketing, or implementation.
+
+## Current contextual resolution decision
+
+An authorized participant may expressly report a genuinely addressed need resolved while associated responsibilities remain outstanding. With no remaining work, preserve one-action express resolution and authorized combined completion/resolution. With remaining work, show concise context, allow separately authorized explicit cancellation with history, and otherwise retain visible follow-up in appropriate authorized attention views. Do not imply everything is finished or grant cancellation power merely from resolution authority.
+
+Provide affected Helpers appropriate restrained notice without claiming receipt/action. Resolved-need opportunities must not misleadingly solicit new commitments, without silently dismissing accepted responsibilities or losing history; detailed availability handling remains open. Backend current-state/authorization/conflict checks protect concurrent changes. Corrections preserve attribution and do not revive canceled commitments automatically. Refusal/withdrawal is not successful assistance. Respect information boundaries and avoid comments, universal approvals, or repetitive confirmations. Material-change rules, detailed interfaces/labels, schema, transaction mechanisms, APIs, replacement policy, and unusual conflicts remain open.
+
 Latest committed checkpoint: 3771d1f approved ADR 0008. Pending ADR 0009 documents the approved state/concurrency architecture and now the approved first-valid-committed acceptance rule for available single-person responsibilities. Its specification/checkpoint updates remain uncommitted pending review. Preserve earlier decisions; historical statements below do not reopen committed ADRs. Stop after summary, conflict report, and Git status; no further decision question, commit, tickets, or implementation.
 
 ## Current coordination-state decision
