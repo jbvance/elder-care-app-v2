@@ -10,6 +10,16 @@
 
 ## Current stopping point
 
+Latest committed checkpoint: 41b1459 approved contextual resolution in ADR 0009. ADR 0010 now records the user's approved limited offline architecture, with specification/checkpoint changes uncommitted pending review. Earlier pending references below are historical. Stop after summary, conflicts, and Git status; do not commit, ask another decision, create tickets, invoke `$to-tickets`, or implement.
+
+## Current offline architecture decision
+
+Use a minimal protected cache of previously authorized essential information for accepted responsibilities and a durable completion-only outbox. Include relevant authorized practical health instructions, not unrelated background or broad comments. Save durably before reporting local success, retaining attribution, timing, responsibility context, and stable operation identifiers through ordinary restarts.
+
+Automatically synchronize when practical at active startup/resume/connectivity restoration; do not depend on background execution or immediate closed-app delivery. Backend identity/authorization/state/material-change/deduplication checks govern acceptance under ADR 0009. Pending is distinct from accepted/shared and never implies others read or verified a report. Retry temporary failures automatically; definitive conflicts/authorization failures need clear authorized recovery, not endless retries or stale overwrites.
+
+Protect local data through encryption, account isolation, secure keys, and device safeguards; if encrypted SQLite is chosen later, verify real builds, recognizing SQLCipher is not in Expo Go. Distinguish replaceable cache and unsent reports for sign-out/switching/withdrawal/cleanup; no silent report destruction or indefinite retention without policy. Disconnected removal cannot be guaranteed; uninstall/device/key loss can make pending reports unrecoverable. No offline acceptance/reassignment/broader editing/invitations/resolution. Exact libraries, encryption/keys, retention, session-transition cleanup, retries, and rejected-report handling remain open. Preserve synthetic-data and all other live-use gates.
+
 Latest committed checkpoint: 2614b5c approved ADR 0009's state/concurrency architecture and first-valid-acceptance rule. ADR 0009 now also records the user's approved contextual resolution behavior with specification/checkpoint updates, uncommitted pending review. Earlier pending references below are historical. Stop after summary, conflicts, and Git status; no further question, commit, ticketing, or implementation.
 
 ## Current contextual resolution decision
