@@ -1,0 +1,96 @@
+# Local synthetic development only. Read docs/local-supabase.md before starting.
+project_id = "elder-care-app-v2"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+auto_expose_new_tables = false
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 17
+health_timeout = "2m"
+
+[db.migrations]
+enabled = true
+schema_paths = []
+
+[db.seed]
+enabled = false
+
+[db.pooler]
+enabled = false
+
+[realtime]
+enabled = false
+
+[studio]
+enabled = false
+
+[local_smtp]
+enabled = true
+port = 54324
+
+[storage]
+enabled = false
+
+[storage.s3_protocol]
+enabled = false
+
+[storage.analytics]
+enabled = false
+
+[storage.vector]
+enabled = false
+
+[auth]
+enabled = true
+site_url = "http://127.0.0.1:3000"
+additional_redirect_urls = []
+jwt_expiry = 3600
+enable_refresh_token_rotation = true
+refresh_token_reuse_interval = 10
+enable_signup = true
+enable_anonymous_sign_ins = false
+enable_manual_linking = false
+
+[auth.rate_limit]
+# CLI 2.122.0 overrides this hourly limit for built-in Mailpit (see local setup notes).
+email_sent = 2
+sms_sent = 30
+anonymous_users = 30
+token_refresh = 150
+sign_in_sign_ups = 30
+token_verifications = 30
+web3 = 30
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = true
+secure_password_change = true
+max_frequency = "60s"
+otp_length = 6
+otp_expiry = 600
+
+[auth.email.template.confirmation]
+subject = "Your Elder Care development sign-in code"
+content_path = "./supabase/templates/email-code.html"
+
+[auth.email.template.magic_link]
+subject = "Your Elder Care development sign-in code"
+content_path = "./supabase/templates/email-code.html"
+
+[auth.sessions]
+inactivity_timeout = "720h"
+# No fixed session timebox. Hosted 30-day enforcement remains deferred.
+
+[edge_runtime]
+enabled = false
+
+[analytics]
+enabled = false

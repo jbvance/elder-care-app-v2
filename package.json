@@ -1,0 +1,8 @@
+{
+  "name": "elder-care-app-v2-dev-tools",
+  "private": true,
+  "description": "Repository-local backend development tooling",
+  "devDependencies": {
+    "supabase": "2.122.0"
+  }
+}
