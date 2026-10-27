@@ -2,7 +2,7 @@
 
 **What to build:** Use approved email codes and protected retained sessions; preserve identity-owned arrangement and prepared need across returning use and original-email replacement-device sign-in.
 
-**Blocked by:** 01: Explore and prepare one private need (approved slice 1)
+**Blocked by:** 01: Explore and prepare one private need (approved slice 1). Protected-foundation dependency sufficiently satisfied for synthetic-data implementation sequencing only; ticket 01 acceptance remains open (see sequencing decision below).
 
 **Status:** ready-for-agent
 
@@ -38,7 +38,7 @@
 
 The user approved ready-for-agent finalization for the fully specified synthetic-data implementation scope, with the hosted-environment verification gate explicitly deferred below. Repository triage defines readiness, not completion of every future environment test; its conventions do not prohibit this explicit deferred gate. Readiness does not authorize starting implementation or invoking implement. Historical needs-info comments below are superseded by this approval.
 
-The bounded authentication-security baseline and synthetic-data ticket content are approved. No further substantive product/security approval blocker is identified for that scope. The budget is US$0/month for Supabase development; paid-hosted configuration and validation are deferred, not satisfied. Completion of ticket 01 remains a normal implementation dependency. Effective current-session and current-permission enforcement is required during no-cost development and must not depend on Pro-only inactivity configuration.
+The bounded authentication-security baseline and synthetic-data ticket content are approved. No further substantive product/security approval blocker is identified for that scope. The budget is US$0/month for Supabase development; paid-hosted configuration and validation are deferred, not satisfied. Ticket 01 remains the protected-foundation dependency; the approved sequencing decision below permits synthetic-data implementation before its remaining platform-specific acceptance checks are complete. Effective current-session and current-permission enforcement is required during no-cost development and must not depend on Pro-only inactivity configuration.
 
 The private-draft product behavior, anonymous-draft lifecycle/safe association, and local Expo SQLite/SQLCipher architecture with SecureStore-protected securely generated keys are approved as recorded in ticket 01. Implement authenticated association and session-transition integration here without reopening that contract. Session-retention behavior is also approved: secure return access, proposed 30-day successful-refresh-based inactivity timeout, active/foreground refresh, reauthentication on actual expiry, explicit sign-out and appropriate lost-device revocation, with no unnecessary fixed maximum lifetime. This does not finalize all storage-adapter, token/code, abuse-control or recovery details. No automatic fixed-inactivity draft expiration is approved.
 
@@ -90,3 +90,9 @@ Latest user approval settles product-level session retention and active/foregrou
 Latest user approval settles the bounded authentication-security baseline, including complete encrypted session storage, ten-minute codes, sixty-second resend minimum, one-hour access-token starting default, current-device scoped sign-out, reauthenticated other-session revocation and tested current backend enforcement. This supersedes historical pending-baseline language. Plan affordability/availability gate and final ticket approval remain; status stays needs-info. No purchase, configuration, commit or implementation is authorized.
 
 Latest approval: user finalizes ticket 02 as ready-for-agent within a US$0/month Supabase development budget, using local/Cloud Free synthetic scope. Hosted Pro-only inactivity configuration and final verification are explicitly deferred until a suitable paid environment is approved. This supersedes historical requirements to approve Pro costs before ticket readiness. All security safeguards remain; no purchase, deployment, commit or implementation is authorized by this update.
+
+### Approved implementation-sequencing refinement (2026-10-27)
+
+The user expressly approves proceeding with synthetic-data implementation on ticket 01's committed foundation at `1b15081729e55be4f7875750aebd78bc69ef9e2a`: necessary private-draft interfaces and core Android behavior have been delivered and validated. The substantive dependency is retained and sufficiently satisfied for implementation sequencing only. This supersedes the earlier requirement to await full ticket 01 completion before beginning ticket 02; it neither declares ticket 01 complete nor weakens SQLCipher/SecureStore protection or any acceptance requirement.
+
+Outstanding ticket 01 native iOS, selected Android failure/recovery, actual backup/transfer, accessibility and other applicable checks remain open and must be completed before the relevant integrated feature or release is considered fully accepted. See [ticket 01's checkpoint](01-private-need.md#implementation-and-android-validation-checkpoint-2026-10-27). The US$0/month synthetic scope, deferred paid-hosted inactivity verification and all real-information/live-use gates remain unchanged. This checkpoint authorizes documentation and its commit only; no ticket 02 implementation is performed here.
