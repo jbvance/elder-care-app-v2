@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "mobile",
+    "name": "Elder Care App v2",
     "slug": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,9 +8,13 @@
     "scheme": "mobile",
     "userInterfaceStyle": "automatic",
     "ios": {
+      "bundleIdentifier": "com.eldercareapp.v2",
       "icon": "./assets/expo.icon"
     },
     "android": {
+      "package": "com.eldercareapp.v2",
+      "allowBackup": false,
+      "blockedPermissions": ["android.permission.READ_EXTERNAL_STORAGE", "android.permission.WRITE_EXTERNAL_STORAGE"],
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
@@ -32,7 +36,10 @@
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
         }
-      ]
+      ],
+      ["expo-sqlite", { "useSQLCipher": true }],
+      ["expo-secure-store", { "configureAndroidBackup": false }],
+      "./plugins/with-private-draft-protection"
     ],
     "experiments": {
       "typedRoutes": true,

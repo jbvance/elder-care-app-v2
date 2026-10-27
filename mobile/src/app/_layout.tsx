@@ -1,18 +1,19 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+import { useDraftColors } from '@/features/private-draft/draft-ui';
 
-SplashScreen.preventAutoHideAsync();
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function RootLayout() {
+  const colors = useDraftColors();
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <StatusBar style="auto" />
+      <Stack screenOptions={{ headerStyle: { backgroundColor: colors.background }, headerTintColor: colors.text, headerTitleStyle: { fontSize: 20 }, contentStyle: { backgroundColor: colors.background } }}>
+        <Stack.Screen name="index" options={{ title: 'Elder Care' }} />
+        <Stack.Screen name="draft" options={{ title: 'Private draft' }} />
+        <Stack.Screen name="explore" options={{ title: 'How it helps' }} />
+      </Stack>
+    </SafeAreaProvider>
   );
 }
