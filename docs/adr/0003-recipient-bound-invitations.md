@@ -19,10 +19,41 @@ Recipient binding prevents a forwarded link from acting as sufficient authority 
 
 Unrestricted bearer invitations would be easier to forward but could disclose sensitive information to an unintended recipient. Requiring repeated manual approval for every routine join would add family administration without replacing backend validation. Neither is selected. The application should manage complexity behind the scenes rather than expose detailed permission administration.
 
-## Unresolved details and safeguards
+## Approved invitation execution contract (2026-10-28)
 
-Invitation expiration duration, exact recipient/email matching rules, revocation mechanics, token/link implementation, and detailed authorization policies remain for separate decisions before dependent implementation tickets are finalized. No normalization, alias handling, automatic account linking, or exceptional recovery rule is selected here.
+The user approved the following rules for ticket 03. They resolve its invitation design gate; feature implementation still requires a separate explicit instruction.
 
-Define and test validation when an invitation expires or is revoked, inviter authority changes, a link is forwarded, or an alternate identity attempts to join. This names required security behavior, not a selected schema or transaction mechanism. Preserve ADR 0001's consumer-only and real-data contractual gates, ADR 0002's authentication boundaries, and the approved offline, privacy, and usability requirements.
+### Recipient and stable identity
 
-This decision refines the invitation questions intentionally left open in ADR 0002; it does not supersede its authentication decision. ADR 0002 and associated documentation, together with this ADR, remain uncommitted pending user review. No ticketing, implementation, or additional technology selection is authorized.
+Trim surrounding whitespace and lowercase the complete designated email address, consistently with the existing email-code sign-in flow. Do not rewrite aliases, dots, plus tags or domains, or treat different provider addresses as equivalent. Redemption must compare the designated address with the authenticated recipient's current confirmed Auth email obtained server-side, not a client-supplied address, editable metadata or a stale token email claim. Successful participation binds to the stable Auth user ID; a consumed invitation cannot transfer participation to a different identity.
+
+For a mismatch, offer sign-in with the intended address or a corrected invitation from a currently authorized inviter. Show only the user's own signed-in address and generic recovery instructions, without disclosing the designated address or private arrangement information. Account switching preserves the existing sign-out and anonymous-draft safeguards. The synthetic local build retains its fictional-address restriction; no new email-identity or recovery architecture is introduced.
+
+The existing application trims/lowercases sign-in input. The pinned Auth implementation lowercases validated email and performs case-insensitive email lookup: [Auth validation](https://github.com/supabase/auth/blob/v2.197.0/internal/api/mail.go#L659-L670), [Auth lookup](https://github.com/supabase/auth/blob/v2.197.0/internal/models/user.go#L652-L655).
+
+### Lifetime, replacement and atomic joining
+
+- Invitations expire seven elapsed days after issuance. At the locked redemption validation point, database time must be strictly before expiry; opening a link does not extend its lifetime.
+- Explicit replacement/resend atomically invalidates the prior pending invitation for the same recipient and prompting scope and issues a new seven-day invitation. Retrying the same issuance operation is idempotent and does not rotate again.
+- Opening a link grants no access and never redeems it. One explicit authenticated Join action atomically checks current session validity, confirmed recipient identity, invitation state, current permission, delegation, scope and inviter authority before recording one attributable redemption and the intended scoped participation.
+- Concurrent submissions and lost-response retries must not create duplicate grants. A same-recipient retry can report the existing join only with a valid session and current access; it cannot recreate revoked participation. A fresh invitation cannot bypass an active restriction.
+- Losing relevant inviter authority invalidates outstanding invitations; regaining authority does not revive them. Serialize authority/invitation changes with redemption so revocation winning the race denies the join. If the prompting need is withdrawn or no longer shareable, deny redemption.
+- Expiry after successful joining does not expire participation. Revoking a pending invitation is distinct from removing a participant. Existing participation follows independently valid current authorization; inviter departure alone does not automatically remove everyone they previously invited.
+
+Use the existing Supabase Auth/PostgreSQL architecture and narrow transactional operations. An opaque high-entropy invitation token identifies the invitation, with its hash stored server-side; it never substitutes for authentication or authorization. No expiry scheduler, gateway or custom authentication infrastructure is required. Routine schema, token/link representation and transaction details remain delegated within this contract.
+
+### Link journey and authorized destination
+
+Copy invitation link is the delivery mechanism for this synthetic slice. Demonstrate opening the copied link on the native development device, retaining the pending invitation through email-code sign-in, returning to it and explicitly joining. Use the existing local-development/USB approach and local Mailpit authentication. Link opening and sign-in alone neither redeem nor disclose private information. Pending link handling must preserve account separation and avoid sensitive logging or plaintext persistence.
+
+Before successful joining, provide generic invitation/sign-in or unavailable-link instructions only: no older-adult name, need, location, inviter identity or designated recipient address. Expired, revoked, replaced, invalid and wrong-account links disclose no private information or arrangement existence through their recovery response.
+
+After joining, show only the deliberately authorized practical summary of the prompting need, including inviter and available timing/place within the authorized audience. Make that disclosure clear in the ordinary invitation preparation flow without requiring reentry of known information or an extra approval screen. Do not expose the owner-private arrangement payload, restricted background or unrelated needs. State that joining has not accepted assistance responsibility. This read-only destination does not implement ticket 05 acceptance, scheduling or completion functionality.
+
+Ticket 03 includes only the authorized participant removal necessary to enforce and test immediate loss of the affected access, including requests with previously issued tokens. It must not depend on ticket 04 to establish basic revocation. Broader participant management, preset/scope editing and separately controlled authority workflows remain in ticket 04; no general-purpose permissions editor is introduced.
+
+## Safeguards and retained gates
+
+Test matching/mismatch, invalid/expired/revoked/replaced links, inviter-authority loss, atomic redemption/retries/races, cross-arrangement isolation, limited audiences and revoked/restricted-participant denial at the actual backend boundary. Preserve the approved initial direct/reported-permission and delegated-authority contract without claiming verified legal consent or treating private ownership as sharing authority.
+
+Production hosting, automatic invitation email and paid services are outside this synthetic slice. Preserve ADR 0001's consumer-only and real-data contractual gates, ADR 0002's authentication boundaries, outstanding native/platform acceptance and the approved offline, privacy and usability requirements. This refines ADR 0002's open invitation questions without superseding its authentication decision. The decisions are approved; this documentation update authorizes no feature implementation or commit.
