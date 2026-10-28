@@ -1,6 +1,26 @@
 import { createPrivateDraftStore, type DraftPlatform } from '../protected-store';
 import { nativeIoFixture } from './native-io-fixture';
 
+test('acknowledged cleanup cannot delete an intervening queued draft save', async () => {
+  const fixture = nativeIoFixture();
+  const store = createPrivateDraftStore(fixture.platform);
+  const older = { olderAdult: 'Fictional Morgan', description: 'Old need', location: '', date: '', time: '', timeZone: 'UTC', prepared: true };
+  const newer = { ...older, description: 'Newer private edit', prepared: false };
+  try {
+    await store.save(older);
+    const save = store.save(newer);
+    const cleanup = store.discardIfUnchanged(older);
+    await save;
+    expect(await cleanup).toBe(false);
+    expect(await store.load()).toEqual(newer);
+    const acknowledged = store.discardIfUnchanged(newer);
+    const followingSave = store.save(older);
+    expect(await acknowledged).toBe(true);
+    await followingSave;
+    expect(await store.load()).toEqual(older);
+  } finally { fixture.cleanup(); }
+});
+
 test('refuses protected persistence when the native build has no SQLCipher', async () => {
   const database = {
     getFirstAsync: jest.fn().mockResolvedValue(null),

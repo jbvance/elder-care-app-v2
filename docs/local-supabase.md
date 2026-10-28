@@ -125,6 +125,18 @@ lost-device behavior and local elapsed-inactivity expiry remain unverified.
 Pro-only hosted 30-day inactivity configuration and verification remain explicitly
 deferred. No custom timeout framework or fixed maximum lifetime was introduced.
 
+Subsequent ticket 02 testing exercised code expiry/reuse and direct verification
+throttling. Code safeguards passed, but IP verification throttling did not: the
+running Auth container lacks `GOTRUE_RATE_LIMIT_HEADER`, so the configured numeric
+limits alone do not establish enforcement. A bounded investigation did not find
+a practical exposed supported configuration in pinned CLI 2.122.0. The user
+explicitly accepted continuing local synthetic development without a custom
+workaround; actual verification throttling remains mandatory before real-data or
+live use. This is separate from the accepted Mailpit hourly-email override. See
+[the ticket 02 checkpoint](ticket02-implementation-checkpoint.md) for the current
+evidence and failing regression. The historical infrastructure health smoke check
+does not establish abuse-control acceptance.
+
 No hosted project was created or linked; no paid services, real recipients,
 external SMTP, production credentials or real care information were used. Hosting
 remains $0/month. Root environment files, signing keys and node_modules plus

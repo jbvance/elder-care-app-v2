@@ -29,6 +29,7 @@ export type PrivateDraftStore = {
   load(): Promise<PrivateDraft | null>;
   save(draft: PrivateDraft): Promise<void>;
   discard(): Promise<void>;
+  discardIfUnchanged(expected: PrivateDraft): Promise<boolean>;
 };
 
 export function createPrivateDraftStore(platform: DraftPlatform): PrivateDraftStore {
@@ -103,7 +104,28 @@ export function createPrivateDraftStore(platform: DraftPlatform): PrivateDraftSt
         }
       });
     },
+    discardIfUnchanged(expected) {
+      return serialized(async () => {
+        try {
+          const matches = await protectedDatabase(async database => {
+            const row = await database.getFirstAsync<{ payload: string }>('SELECT payload FROM private_draft WHERE id = 1');
+            if (!row) return false;
+            const value: unknown = JSON.parse(row.payload);
+            return isPrivateDraft(value) && samePrivateDraft(value, expected);
+          });
+          if (!matches) return false;
+          // Comparison and destruction share the same queue as editor saves.
+          await platform.removeKey();
+          await platform.removeDatabase();
+          return true;
+        } catch { throw new Error('Acknowledged draft cleanup could not be confirmed. Please try again.'); }
+      });
+    },
   };
+}
+
+export function samePrivateDraft(a: PrivateDraft, b: PrivateDraft): boolean {
+  return a.olderAdult === b.olderAdult && a.description === b.description && a.location === b.location && a.date === b.date && a.time === b.time && a.timeZone === b.timeZone && a.prepared === b.prepared;
 }
 
 export function isPrivateDraft(value: unknown): value is PrivateDraft {

@@ -6,15 +6,13 @@ import * as SQLite from 'expo-sqlite';
 import { createPrivateDraftStore, type DraftPlatform } from './protected-store';
 
 const directory = new Directory(Paths.document, 'PrivateDrafts');
-const databaseName = 'anonymous-v1.db';
-const keyName = 'eldercare.anonymous-draft.v1';
 const keyOptions: SecureStore.SecureStoreOptions = {
   keychainService: 'eldercare.private-draft',
   keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
   requireAuthentication: false,
 };
 
-const platform: DraftPlatform = {
+export function createDevicePlatform(databaseName: string, keyName: string): DraftPlatform { return {
   async open() {
     // Created by the native CNG plugin only after backup protections are set.
     if (!new File(directory, '.backup-excluded').exists) throw new Error('Protected directory is unavailable');
@@ -32,7 +30,7 @@ const platform: DraftPlatform = {
       if (file.exists) file.delete();
     }
   },
-};
+}; }
 
 // Only an anonymous store exists here: no account, server or sharing path.
-export const privateDraftStore = createPrivateDraftStore(platform);
+export const privateDraftStore = createPrivateDraftStore(createDevicePlatform('anonymous-v1.db', 'eldercare.anonymous-draft.v1'));

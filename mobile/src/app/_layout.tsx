@@ -13,6 +13,7 @@ export default function RootLayout() {
         <Stack.Screen name="index" options={{ title: 'Elder Care' }} />
         <Stack.Screen name="draft" options={{ title: 'Private draft' }} />
         <Stack.Screen name="explore" options={{ title: 'How it helps' }} />
+        <Stack.Screen name="account" options={{ title: 'Private account' }} />
       </Stack>
     </SafeAreaProvider>
   );

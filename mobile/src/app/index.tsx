@@ -37,6 +37,7 @@ export default function HomeScreen() {
         <Action onPress={() => router.push('/draft')}>Revisit private draft</Action>
       </> : <Action onPress={() => router.push('/draft')}>Prepare an assistance need</Action>}
       <Action secondary onPress={() => router.push('/explore')}>Explore how it helps</Action>
+      <Action secondary onPress={() => router.push('/account')}>Open my private account</Action>
       <Copy>Use fictional information during development. This app does not arrange assistance or share information simply because you make a draft.</Copy>
     </Page>
   );
