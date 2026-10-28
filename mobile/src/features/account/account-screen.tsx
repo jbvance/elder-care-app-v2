@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { router } from 'expo-router';
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { AppState, Text } from 'react-native';
 import { Action, Copy, Field, Page, useDraftColors } from '../private-draft/draft-ui';
 import type { Account, AccountView } from './account-service';
 import { AccountError } from './account-service';
 
-export function AccountScreen({ account }: { account: Account }) {
+export function AccountScreen({ account, header, invitationMode = false }: { account: Account; header?: ReactNode; invitationMode?: boolean }) {
   const colors = useDraftColors();
   const [view, setView] = useState<AccountView | null>(null);
   const [email, setEmail] = useState('');
@@ -61,6 +62,7 @@ export function AccountScreen({ account }: { account: Account }) {
     setRevoking(false); setConfirmOut(false);
   }
   return <Page>
+    {header}
     <Copy heading>Your private account</Copy>
     <Copy>Fictional local development only. Signing in does not share your draft or arrange assistance.</Copy>
     {!view ? <>
@@ -69,6 +71,7 @@ export function AccountScreen({ account }: { account: Account }) {
       <Action secondary disabled={busy} onPress={() => setConfirmOut(true)}>Sign out here</Action>
     </> : view.user ? <>
       <Copy>{view.user.email}</Copy>
+      {!invitationMode && <>
       {view.hasDraft && <>
         <Copy>Your device draft is still private. Save it to this account to retrieve it on another device. This does not invite anyone or share it.</Copy>
         <Action disabled={busy} onPress={() => void perform(async () => {
@@ -77,7 +80,9 @@ export function AccountScreen({ account }: { account: Account }) {
         })}>Save my draft to this account</Action>
       </>}
       {view.arrangements.map(item => <Copy key={item.id}>{item.draft.olderAdult}: {item.draft.description}{item.draft.date ? ` — ${item.draft.date} ${item.draft.time} (${item.draft.timeZone})` : ''}{item.draft.location ? ` — ${item.draft.location}` : ''}</Copy>)}
+      {view.arrangements.map(item => <Action key={item.id} secondary onPress={() => router.push({ pathname: '/invite', params: { id: item.id } })}>Permission and invitations for {item.draft.olderAdult}</Action>)}
       {!view.arrangements.length && <Copy>No private arrangements saved to this account yet.</Copy>}
+      </>}
       <Action secondary disabled={busy} onPress={() => {
         if (view.hasDraft) setConfirmOut(true);
         else { setView(null); void perform(() => signOut()); }

@@ -1,3 +1,4 @@
+import { createInvitationService } from '../invitations/invitation-service';
 import 'react-native-url-polyfill/auto';
 import { createClient, processLock } from '@supabase/supabase-js';
 import { randomUUID } from 'expo-crypto';
@@ -7,6 +8,8 @@ import { accountStorage } from './account-storage';
 import { createAccountService, type Account } from './account-service';
 import { refreshForeground } from './refresh-foreground';
 
+let invitations: ReturnType<typeof createInvitationService> | undefined;
+export function getInvitations() { getAccount(); return invitations!; }
 let account: Account | undefined;
 export function getAccount(): Account {
   if (account) return account;
@@ -36,6 +39,7 @@ export function getAccount(): Account {
   updateRefresh();
   AppState.addEventListener('change', updateRefresh);
   client.auth.onAuthStateChange(event => { if (event === 'SIGNED_IN') setTimeout(updateRefresh, 0); });
+  invitations = createInvitationService(client, accountStorage, randomUUID);
   account = createAccountService(client, accountStorage, privateDraftStore, randomUUID);
   return account;
 }

@@ -111,6 +111,7 @@ export function createAccountService(client: SupabaseClient, storage: ProtectedS
       if (draft && !discardDraft) throw new AccountError('Keep your draft by canceling, or discard it and sign out.');
       if (draft) await drafts.discard();
       await storage.removeItem(receiptKey);
+      await storage.removeItem('invitation-issuance-v1');
       let serverConfirmed = false;
       try {
         await client.auth.stopAutoRefresh();
