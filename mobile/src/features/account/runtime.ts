@@ -1,3 +1,4 @@
+import { createParticipationService } from '../participation/participation-service';
 import { createInvitationService } from '../invitations/invitation-service';
 import 'react-native-url-polyfill/auto';
 import { createClient, processLock } from '@supabase/supabase-js';
@@ -8,6 +9,8 @@ import { accountStorage } from './account-storage';
 import { createAccountService, type Account } from './account-service';
 import { refreshForeground } from './refresh-foreground';
 
+let participation: ReturnType<typeof createParticipationService> | undefined;
+export function getParticipation() { getAccount(); return participation!; }
 let invitations: ReturnType<typeof createInvitationService> | undefined;
 export function getInvitations() { getAccount(); return invitations!; }
 let account: Account | undefined;
@@ -39,6 +42,7 @@ export function getAccount(): Account {
   updateRefresh();
   AppState.addEventListener('change', updateRefresh);
   client.auth.onAuthStateChange(event => { if (event === 'SIGNED_IN') setTimeout(updateRefresh, 0); });
+  participation = createParticipationService(client, randomUUID);
   invitations = createInvitationService(client, accountStorage, randomUUID);
   account = createAccountService(client, accountStorage, privateDraftStore, randomUUID);
   return account;

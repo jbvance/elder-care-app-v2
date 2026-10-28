@@ -72,6 +72,7 @@ export function AccountScreen({ account, header, invitationMode = false }: { acc
     </> : view.user ? <>
       <Copy>{view.user.email}</Copy>
       {!invitationMode && <>
+      <Action secondary onPress={() => router.push('/participation')}>Open scoped participation</Action>
       {view.hasDraft && <>
         <Copy>Your device draft is still private. Save it to this account to retrieve it on another device. This does not invite anyone or share it.</Copy>
         <Action disabled={busy} onPress={() => void perform(async () => {

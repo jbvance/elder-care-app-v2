@@ -4,7 +4,7 @@
 
 **Blocked by:** 03: Authorize collaboration and join by invitation (approved slice 3)
 
-**Status:** needs-info
+**Status:** ready-for-agent
 
 **Approved slice:** 4. Filename numbers follow dependency order; approved slice IDs remain unchanged.
 
@@ -26,7 +26,7 @@
 
 ## Approval and execution gates
 
-This is a published **draft**, not an executable ticket. Content review is pending; dependency completion alone does not authorize implementation.
+The user approved the focused execution contract and explicitly authorized bounded synthetic implementation on 2026-10-28 from `ff23eff682cb821bf31136702d7111cc0004a718`. The content gate is resolved. Ticket 03 satisfies the technical dependency for this sequencing only; tickets 01/02/03 acceptance and live-use gates remain open. No staging, commit, push or ticket 05 work is authorized.
 
 No new authorization model approval is required. Implement the approved concrete authorization contract; raise only a consequential gap discovered while representing its boundaries.
 
@@ -45,3 +45,13 @@ Live-family use additionally requires validated authorization/review support, re
 ## Comments
 
 Drafted following the approved breakdown and installed to-tickets publication stage. No implementation authorization or source-baseline change.
+
+## Approved execution contract (2026-10-28)
+
+Deliver recognizable scoped participation changes, Helper/Coordinator defaults, suggestions without grants, explicit direct/reported authorization and separate management/onward-delegation, restricted-read, practical-disclosure, cancellation and resolution capabilities. Retain existing narrow ticket 03 rights and restrictions; neither ownership nor a preset creates additional authority. New statements cannot restore restrictions or confer rights outside established authorization.
+
+Use simple contextual controls, actual grant mutations and separate practical/restricted reads. Show the effect of audience changes on existing content. Coordinator resolution is the approved scoped default; cancellation, management, onward delegation, restricted access and external disclosure remain distinct. Existing invitation email matching, stable joined identity, expiry/replacement, removal and replay protections remain mandatory.
+
+Record/display future cancellation/resolution authority without dummy execution endpoints. No acceptance, scheduling, completion, actual commitment cancellation, express resolution, full comments, external exports, recurrence, notifications or shared offline cache. Later tickets must test their real execution checks.
+
+Test multiple participants, arrangements and need scopes at actual backend RPCs; no automatic migration broadening, self-escalation or over-delegation; immediate current-token restrictions; safe retries and serialized stale/racing mutations. Keep UI/backend/native evidence separate. Preserve attribution, independent unaffected access, synthetic data, existing Supabase/mobile architecture and $0/month development. Acceptance remains unverified pending evidence and independent review.

@@ -6,6 +6,7 @@ import { Action, Copy } from '../private-draft/draft-ui';
 import type { Invitations, Summary } from './invitation-service';
 import { unavailable } from './invitation-service';
 import { subscribePendingInvitation } from './pending-invitation';
+import { subscribeScopeChanges } from '../participation/participation-service';
 
 export function InvitationScreen({ account, invitations }: { account: Account; invitations: Invitations }) {
   const [token, setToken] = useState<string | null>(null);
@@ -27,12 +28,13 @@ export function InvitationScreen({ account, invitations }: { account: Account; i
     };
     refresh();
     const unsub = account.subscribe(refresh);
+    const unsubScope = subscribeScopeChanges(refresh);
     const unsubLink = subscribePendingInvitation(changing => {
       if (changing) { ++generation; invalidate(); setSummary(null); setToken(null); setNotice(''); }
       else refresh();
     });
     const app = AppState.addEventListener('change', state => { ++generation; invalidate(); setSummary(null); setUser(null); if (state === 'active') refresh(); });
-    return () => { active = false; ++generation; invalidate(); unsub(); unsubLink(); app.remove(); };
+    return () => { active = false; ++generation; invalidate(); unsub(); unsubScope(); unsubLink(); app.remove(); };
   }, [account, invitations]);
   async function join() {
     if (!token || busy) return;
