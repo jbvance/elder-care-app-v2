@@ -55,6 +55,11 @@ export function AccountScreen({ account }: { account: Account }) {
     await account.requestCode(revoking ? view!.user!.email : email);
     setCode(''); setSent(true); setResendAt(Date.now() + 60_000); setClock(Date.now());
   }
+  async function signOut(discardDraft = false) {
+    await account.signOut(discardDraft);
+    setEmail(''); setCode(''); setSent(false); setResendAt(0);
+    setRevoking(false); setConfirmOut(false);
+  }
   return <Page>
     <Copy heading>Your private account</Copy>
     <Copy>Fictional local development only. Signing in does not share your draft or arrange assistance.</Copy>
@@ -75,7 +80,7 @@ export function AccountScreen({ account }: { account: Account }) {
       {!view.arrangements.length && <Copy>No private arrangements saved to this account yet.</Copy>}
       <Action secondary disabled={busy} onPress={() => {
         if (view.hasDraft) setConfirmOut(true);
-        else { setView(null); void perform(() => account.signOut()); }
+        else { setView(null); void perform(() => signOut()); }
       }}>Sign out on this device</Action>
       <Action secondary disabled={busy} onPress={() => { setRevoking(true); setSent(false); setCode(''); }}>Sign out other devices</Action>
     </> : <>
@@ -99,7 +104,7 @@ export function AccountScreen({ account }: { account: Account }) {
     {remaining > 0 && <Copy>Another code can be requested in {remaining} seconds.</Copy>}
     {confirmOut && <>
       <Copy>Signing out or changing accounts requires discarding any unassociated private draft. Cancel to keep it. Saved account arrangements remain private to their owner.</Copy>
-      <Action disabled={busy} onPress={() => { setView(null); void perform(async () => { await account.signOut(true); setConfirmOut(false); setSent(false); setCode(''); }); }}>Discard device draft and sign out</Action>
+      <Action disabled={busy} onPress={() => { setView(null); void perform(() => signOut(true)); }}>Discard device draft and sign out</Action>
       <Action secondary disabled={busy} onPress={() => setConfirmOut(false)}>Cancel and keep draft</Action>
     </>}
     {!!notice && <Text accessibilityRole="alert" accessibilityLiveRegion="polite" style={{ fontSize: 18, lineHeight: 28, color: colors.danger }}>{notice}</Text>}
