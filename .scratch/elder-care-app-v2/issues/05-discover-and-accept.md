@@ -4,7 +4,7 @@
 
 **Blocked by:** 04: Apply scoped participation and information boundaries (approved slice 4)
 
-**Status:** needs-info
+**Status:** ready-for-agent
 
 **Approved slice:** 5. Filename numbers follow dependency order; approved slice IDs remain unchanged.
 
@@ -28,7 +28,7 @@
 
 ## Approval and execution gates
 
-This is a published **draft**, not an executable ticket. Content review is pending; dependency completion alone does not authorize implementation.
+The focused contract below was approved for bounded synthetic implementation on 2026-10-29 from `904325178dd5f0fec29f4201151bb79f15267d85`. Ticket 04 is sufficient for this sequencing; tickets 01–04 acceptance and all live-use gates remain open. Independent review is required before any commit.
 
 No new product approval is required for the first-valid-acceptance behavior or opportunity audiences; implement the approved contracts. Escalate only a genuinely uncovered material-state rule.
 
@@ -47,3 +47,15 @@ Live-family use additionally requires validated authorization/review support, re
 ## Comments
 
 Drafted following the approved breakdown and installed to-tickets publication stage. No implementation authorization or source-baseline change.
+
+## Approved bounded execution contract (2026-10-29)
+
+Deliver an ordinary signed-in need/request list and detail path: authorized minimal creation/management, one simple authorized availability choice, Helper discovery and accept/decline/defer, and reachable own accepted work. Joining, viewing, interest and unanswered requests never imply commitment. Show unclaimed gaps to scoped Coordinators. Existing per-need grants do not create an ongoing Helper audience; inherit only a deliberately authorized applicable ongoing audience under ADR 0008. Keep practical/restricted projections separate and enforce current authorization, performer eligibility, preferences, audience and cross-arrangement isolation at the backend.
+
+Preserve ADR 0009's first-valid backend-committed exclusive acceptance, including an existing valid outside agreement, deterministic already-arranged competitor result, safe same-operation lost-response retry without access bypass, and material-staleness rejection without conflicts from unrelated changes. Decline answers only the unaccepted Helper request; defer leaves reconsideration possible. Neither action cancels an existing accepted commitment, and neither implies broader refusal of assistance. Preserve distinct coordination and performance responsibilities without building later contribution workflows.
+
+After acceptance, do not silently change the accepted task, place, scheduled instant/zone or performance-critical practical instructions. Enforce this in the backend, including existing direct information operations; preserve commitment and attribution. Authorized access restrictions take effect immediately without freeing or canceling that commitment. Do not freeze unrelated nonmaterial information. Explicit changes, withdrawal and replacement belong to ticket 12.
+
+For timed needs, store an authoritative instant and named time zone and show a labeled participant-local equivalent. Unscheduled needs need no time or zone. Reject nonexistent and ambiguous local wall times with recoverable guidance, as the private draft already does. Do not add an occurrence selector or keep-instant/keep-wall-time choice absent demonstrated need. Check a consequential pre-acceptance schedule edit against current material state to prevent stale overwrite.
+
+Exercise fictional prescription pickup as ordinary assistance, with no medication list, clinical form or dose monitoring. Keep completion (06), express resolution (07), outside agreements (09), expanded attention (10), separate contributions (11), plan changes (12), older-adult refusal (14), full information/comments (15), recurrence (16–17) and notifications (21–22) outside this slice. Verify focused UI/service and actual-backend permission, isolation, revocation, concurrency, retry, material-edit and time-zone behavior; attempt focused physical Android observation if available. Keep automated evidence separate from human usability acceptance. Preserve synthetic-only data, existing architecture, $0/month local development and all open gates.

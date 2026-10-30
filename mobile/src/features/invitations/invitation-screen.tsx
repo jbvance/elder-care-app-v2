@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { router } from 'expo-router';
 import { AppState } from 'react-native';
 import type { Account } from '../account/account-service';
 import { AccountScreen } from '../account/account-screen';
@@ -50,6 +51,7 @@ export function InvitationScreen({ account, invitations }: { account: Account; i
         <Copy>{Object.values(summary.summary).filter(Boolean).join(' — ')}</Copy>
         <Copy>Invited by participant {summary.inviter}. Permission recorded {summary.recorded_at}.</Copy>
         <Copy>Joining has not accepted an assistance responsibility. Assistance is not arranged.</Copy>
+        <Action secondary onPress={() => router.push({ pathname: '/work', params: { id: summary.id } })}>Open needs and opportunities</Action>
         <Action disabled={busy} onPress={() => { setSummary(null); void join(); }}>Check current access</Action>
       </> : <>
         <Copy>Sign in with the intended address, then choose Join. Opening this link or signing in does not join or share private information.</Copy>
