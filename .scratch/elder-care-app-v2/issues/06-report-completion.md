@@ -4,7 +4,7 @@
 
 **Blocked by:** 05: Discover opportunities and accept responsibility (approved slice 5)
 
-**Status:** needs-info
+**Status:** ready-for-agent
 
 **Approved slice:** 10. Filename numbers follow dependency order; approved slice IDs remain unchanged.
 
@@ -25,11 +25,7 @@
 
 ## Approval and execution gates
 
-This is a published **draft**, not an executable ticket. Content review is pending; dependency completion alone does not authorize implementation.
-
-Before implementing material-state rejection, confirm completion-relevant material-change rules with the user. Recommend performer/cancellation/responsibility changes require review; unrelated comments do not.
-
-Resolve only decisions required for this slice before marking it ready for implementation. Do not demand resolution of unrelated future-slice questions or reopen approved architecture.
+The bounded synthetic contract below and completion-relevant material-change rule are approved for implementation from committed Ticket 05 HEAD `fb2a129c063b94c6d4a0d7b4dab42324e2d53010`. Ticket 05 is sufficient technical foundation for this sequencing; its acceptance and all prior acceptance and live-use gates remain open. Independent review is required before a commit.
 
 ## Delegated implementation details
 
@@ -44,3 +40,13 @@ Live-family use additionally requires validated authorization/review support, re
 ## Comments
 
 Drafted following the approved breakdown and installed to-tickets publication stage. No implementation authorization or source-baseline change.
+
+## Approved bounded execution contract (2026-11-01)
+
+From **My accepted work**, the currently authorized performer can report their own accepted assistance responsibility complete with one clear action. Persist a separate report tied to that commitment, recording performer, reporter and authoritative server report time. Show backend-acknowledged reported completion in ordinary work navigation. Completion neither verifies the work nor resolves the need; fictional prescription pickup remains ordinary assistance and does not imply medication ingestion. No required comment or routine approval/confirmation round.
+
+At the backend, recheck current session, scoped practical/reporting authority, accepted performer identity and responsibility state under appropriate locking. A first report binds to the accepted commitment and material responsibility terms opened by the Helper. If the commitment was canceled, replaced or materially changed before backend acceptance, reject stale intent and require review of current details. Loss of access is an authority denial. Unrelated display-name, comment or restricted-background changes do not make completion stale. Ticket 05 currently freezes accepted task, place, schedule and essential instructions; this rule does not import Ticket 12 change workflows.
+
+Simultaneous and repeated attempts produce one report with unchanged attribution and time. A lost-response retry reuses captured arguments and operation ID and rechecks current access, without claiming success before acknowledgment. Give distinct recoverable uncertain, stale and definitive-denial outcomes. Keep current practical and restricted projections separate; no direct-RPC, old-token, cross-scope or other-person bypass.
+
+Use one additive migration and focused actual-backend and UI/service tests for authorized and denied reporting, current restrictions, stale intent, races, duplicates, retry, attribution and no automatic resolution. Attempt focused Android observation if available. Ticket 07 express resolution, Ticket 12 changes/replacements, Ticket 13 corrections and Ticket 19 offline outbox remain separate. Keep the existing architecture, synthetic-only information, $0/month local development, dependency 05, approved slice 10, existing story assignments and all open acceptance/live-use gates. No staging, commit or push without independent review.
