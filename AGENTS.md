@@ -14,3 +14,7 @@ Before assigning triage status, read `docs/agents/triage-labels.md`.
 
 Use a single-context layout: root `GLOSSARY.md` and `docs/adr/`.
 Before exploring the codebase, read `docs/agents/domain.md`.
+
+## Git publishing
+
+For authorized repository work, Codex may push an independently reviewed commit to the configured remote after verifying the branch and commit. Follow any task-specific stop or approval gate.
