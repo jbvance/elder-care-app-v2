@@ -21,15 +21,19 @@ export function AssistanceScreen({ account, assistance, initialId, initialView }
   const [mode, setMode] = useState<Mode>(null);
   const [formBase, setFormBase] = useState<WorkItem | null>(null);
   const completionBase = useRef<WorkItem | null>(null);
+  const resolutionBase = useRef<WorkItem | null>(null);
   const [completionStale, setCompletionStale] = useState(false);
+  const [resolutionStale, setResolutionStale] = useState(false);
   const [pendingCompletionScopes, setPendingCompletionScopes] = useState<string[]>([]);
+  const [pendingResolutionScopes, setPendingResolutionScopes] = useState<string[]>([]);
+  const [pendingCombinedScopes, setPendingCombinedScopes] = useState<string[]>([]);
   const [staleRejected, setStaleRejected] = useState(false);
   const [need, setNeed] = useState<NeedInput>(emptyNeed);
   const [choosingZone, setChoosingZone] = useState(false);
   const [notice, setNotice] = useState('');
   const [detailUnavailable, setDetailUnavailable] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [retry, setRetry] = useState<{ action: () => Promise<WorkOutcome>; success: (outcome: WorkOutcome) => string; completion: boolean; scope?: string } | null>(null);
+  const [retry, setRetry] = useState<{ action: () => Promise<WorkOutcome>; success: (outcome: WorkOutcome) => string; completion: boolean; scope?: string; resolution: boolean } | null>(null);
   const generation = useRef(0);
   const active = useRef(false);
   const foreground = useRef(true);
@@ -39,12 +43,17 @@ export function AssistanceScreen({ account, assistance, initialId, initialView }
     const request = ++generation.current;
     setItem(null); setDetailUnavailable(false);
     if (!active.current || !foreground.current) return false;
+    let pendingResolutions: string[] = [], pendingCombined: string[] = [];
     try {
+      pendingResolutions = await assistance.pendingResolutionScopes?.() ?? [];
+      pendingCombined = await assistance.pendingCombinedScopes?.() ?? [];
       const entries = await assistance.list();
       const pending = await assistance.pendingCompletionScopes?.() ?? [];
       if (!active.current || !foreground.current || request !== generation.current) return false;
       setList(entries);
       setPendingCompletionScopes(pending.filter(scope => entries.some(entry => entry.id === scope && entry.accepted_by_me && !entry.completion_reported_at)));
+      setPendingResolutionScopes(pendingResolutions);
+      setPendingCombinedScopes(pendingCombined);
       if (!id) return true;
       try {
         const detail = await assistance.read(id);
@@ -55,13 +64,14 @@ export function AssistanceScreen({ account, assistance, initialId, initialView }
         if (detail.coordinator && detail.can_offer) detail.candidates = await assistance.candidates(detail.id);
         if (active.current && foreground.current && request === generation.current) {
           if (!completionBase.current && detail.accepted_by_me) completionBase.current = { ...detail };
+          if (!resolutionBase.current && detail.can_resolve && !detail.resolved) resolutionBase.current = { ...detail };
           setItem(detail); setNotice(''); return true;
         }
         return false;
       } catch (error) {
         if (!active.current || request !== generation.current) return false;
         if (error instanceof AssistanceAccessDeniedError) {
-          selectedRef.current = null; setSelected(null); setMode(null); setFormBase(null); completionBase.current = null; setCompletionStale(false); setStaleRejected(false); setRetry(null); setItem(null);
+          selectedRef.current = null; setSelected(null); setMode(null); setFormBase(null); completionBase.current = null; resolutionBase.current = null; setCompletionStale(false); setResolutionStale(false); setStaleRejected(false); setRetry(null); setItem(null);
           setNotice('That need is no longer available with current access. Your other authorized work is still listed.');
         } else {
           setDetailUnavailable(true);
@@ -71,41 +81,49 @@ export function AssistanceScreen({ account, assistance, initialId, initialView }
       }
     } catch {
       if (active.current && request === generation.current) {
-        setList([]); setPendingCompletionScopes([]); setDetailUnavailable(!!id); setNotice('Current access could not be confirmed. Reconnect and check current requests.');
+        setList([]); setPendingCompletionScopes([]); setPendingResolutionScopes(pendingResolutions); setPendingCombinedScopes(pendingCombined); setDetailUnavailable(!!id); setNotice('Current access could not be confirmed. Reconnect and check current requests.');
       }
       return false;
     }
   }, [assistance]);
   useFocusEffect(useCallback(() => {
-    active.current = true; setList([]); setPendingCompletionScopes([]); setItem(null); void load();
+    active.current = true; setList([]); setPendingCompletionScopes([]); setPendingResolutionScopes([]); setPendingCombinedScopes([]); setItem(null); void load();
     const unsub = account.subscribe(() => {
-      ++generation.current; selectedRef.current = null; setSelected(null); completionBase.current = null; setCompletionStale(false);
-      setList([]); setPendingCompletionScopes([]); setItem(null); setDetailUnavailable(false); setMode(null); setFormBase(null); setStaleRejected(false); setRetry(null); setNotice(''); void load(null);
+      ++generation.current; selectedRef.current = null; setSelected(null); completionBase.current = null; resolutionBase.current = null; setCompletionStale(false); setResolutionStale(false);
+      setList([]); setPendingCompletionScopes([]); setPendingResolutionScopes([]); setPendingCombinedScopes([]); setItem(null); setDetailUnavailable(false); setMode(null); setFormBase(null); setStaleRejected(false); setRetry(null); setNotice(''); void load(null);
     });
     const app = AppState.addEventListener('change', state => {
-      foreground.current = state === 'active'; ++generation.current; setList([]); setPendingCompletionScopes([]); setItem(null);
+      foreground.current = state === 'active'; ++generation.current; setList([]); setPendingCompletionScopes([]); setPendingResolutionScopes([]); setPendingCombinedScopes([]); setItem(null);
       if (foreground.current) void load();
     });
-    return () => { active.current = false; ++generation.current; setList([]); setPendingCompletionScopes([]); setItem(null); unsub(); app.remove(); };
+    return () => { active.current = false; ++generation.current; setList([]); setPendingCompletionScopes([]); setPendingResolutionScopes([]); setPendingCombinedScopes([]); setItem(null); unsub(); app.remove(); };
   }, [account, load]));
 
-  function select(id: string) { selectedRef.current = id; setSelected(id); completionBase.current = list.find(entry => entry.id === id && entry.accepted_by_me) ?? null; setCompletionStale(false); setDetailUnavailable(false); setMode(null); setFormBase(null); setStaleRejected(false); setRetry(null); setNotice(''); void load(id); }
+  function select(id: string) { selectedRef.current = id; setSelected(id); completionBase.current = list.find(entry => entry.id === id && entry.accepted_by_me) ?? null; resolutionBase.current = list.find(entry => entry.id === id && entry.can_resolve && !entry.resolved) ?? null; setCompletionStale(false); setResolutionStale(false); setDetailUnavailable(false); setMode(null); setFormBase(null); setStaleRejected(false); setRetry(null); setNotice(''); void load(id); }
 
-  async function perform(action: () => Promise<WorkOutcome>, success: (outcome: WorkOutcome) => string, completion = false, completionScope?: string) {
+  async function perform(action: () => Promise<WorkOutcome>, success: (outcome: WorkOutcome) => string, completion = false, completionScope?: string, resolution = false) {
     if (busy) return;
-    setBusy(true); setNotice(''); setRetry(null); if (completion) setCompletionStale(false);
+    setBusy(true); setNotice(''); setRetry(null); if (completion) setCompletionStale(false); if (resolution) setResolutionStale(false);
     try {
       const outcome = await action();
       if (!active.current) return;
       setMode(null); setFormBase(null); setStaleRejected(false); setChoosingZone(false);
       const next = outcome.id ?? completionScope ?? selected;
+      if (completion && outcome.outcome === 'reported') resolutionBase.current = null;
       if (next !== selected) { selectedRef.current = next ?? null; setSelected(next ?? null); }
       if (await load(next)) setNotice(success(outcome));
       else if (completion && outcome.outcome === 'reported') setNotice('The backend acknowledged your completion report. Current details could not be confirmed; check current requests.');
+      else if (resolution && (outcome.outcome === 'resolved' || outcome.outcome === 'already-resolved' || outcome.outcome === 'completed-and-resolved')) setNotice('The backend acknowledged need resolution. Current details could not be confirmed; check current needs.');
     } catch (error) {
       if (!active.current) return;
+      if (resolution) {
+        const pending = await assistance.pendingResolutionScopes?.() ?? [];
+        const combined = await assistance.pendingCombinedScopes?.() ?? [];
+        if (!active.current) return;
+        setPendingResolutionScopes(pending); setPendingCombinedScopes(combined);
+      }
       if (error instanceof AssistanceUncertainError) {
-        setNotice(error.message); setRetry({ action, success, completion, scope: completionScope });
+        setNotice(error.message); setRetry({ action, success, completion, scope: completionScope, resolution });
         if (completion) {
           const pending = await assistance.pendingCompletionScopes?.() ?? [];
           if (active.current) setPendingCompletionScopes(pending.filter(scope => list.some(entry => entry.id === scope && entry.accepted_by_me && !entry.completion_reported_at)));
@@ -120,11 +138,23 @@ export function AssistanceScreen({ account, assistance, initialId, initialView }
         }
         setCompletionStale(true);
         setNotice('This responsibility changed before the report was accepted. Review current details before reporting again.');
+      } else if (error instanceof AssistanceStaleError && resolution) {
+        if (completionScope && completionScope !== selected) {
+          selectedRef.current = completionScope; setSelected(completionScope); resolutionBase.current = null;
+          if (!await load(completionScope)) return;
+        }
+        setResolutionStale(true);
+        setNotice('This need changed before resolution was accepted. Review current details before choosing again.');
       } else if (error instanceof AssistanceAccessDeniedError && completion) {
         const retained = completionScope && completionScope !== selected ? selected : null;
         if (!retained) { selectedRef.current = null; setSelected(null); setItem(null); completionBase.current = null; setCompletionStale(false); }
         await load(retained);
         if (active.current) setNotice('Current access to this responsibility was denied. Your other authorized work is still listed.');
+      } else if (error instanceof AssistanceAccessDeniedError && resolution) {
+        const retained = completionScope && completionScope !== selected ? selected : null;
+        if (!retained) { selectedRef.current = null; setSelected(null); setItem(null); resolutionBase.current = null; setResolutionStale(false); }
+        await load(retained);
+        if (active.current) setNotice('Current access to need resolution was denied. Your other authorized work is still listed.');
       } else {
         setNotice(error instanceof Error ? error.message : 'This action is unavailable. Check the request again.');
       }
@@ -148,12 +178,14 @@ export function AssistanceScreen({ account, assistance, initialId, initialView }
     void perform(action, () => mode === 'edit' ? 'Need details saved. The request remains unresolved until someone accepts.' : 'Need recorded. Assistance is not arranged until a Helper accepts.');
   }
   const accepted = list.filter(entry => entry.accepted_by_me);
-  const opportunities = list.filter(entry => entry.eligible && !entry.arranged && entry.my_answer !== 'declined');
-  const declined = list.filter(entry => entry.eligible && !entry.arranged && entry.my_answer === 'declined');
+  const opportunities = list.filter(entry => !entry.resolved && entry.eligible && !entry.arranged && entry.my_answer !== 'declined');
+  const declined = list.filter(entry => !entry.resolved && entry.eligible && !entry.arranged && entry.my_answer === 'declined');
   const coordination = list.filter(entry => entry.coordinator);
+  const resolvedHistory = list.filter(entry => entry.resolved && !entry.coordinator && !entry.accepted_by_me);
   const formStale = !!(mode && formBase && item && (formBase.id !== item.id ||
     (mode === 'edit' ? formBase.material_revision !== item.material_revision : formBase.scope_revision !== item.scope_revision)));
   const showAll = view !== 'accepted';
+  const combinedPending = !!item && pendingCombinedScopes.includes(item.id);
   return <AccountScreen account={account} invitationMode header={<>
     <Copy heading>Needs and opportunities</Copy>
     <Copy>Fictional development only. Seeing or joining a request is not accepting responsibility.</Copy>
@@ -161,18 +193,27 @@ export function AssistanceScreen({ account, assistance, initialId, initialView }
     <Action secondary onPress={() => setView(view === 'accepted' ? 'all' : 'accepted')}>{view === 'accepted' ? 'Show all needs and opportunities' : 'Show my accepted work'}</Action>
     <Copy heading>My accepted work</Copy>
     {accepted.length ? accepted.map(entry => <Fragment key={`mine-${entry.id}`}>
-      <Action secondary onPress={() => select(entry.id)}>Open accepted work for {entry.older_adult}: {entry.task}{entry.completion_reported_at ? ' — reported complete' : ''}</Action>
+      <Action secondary onPress={() => select(entry.id)}>Open accepted work for {entry.older_adult}: {entry.task}{entry.completion_reported_at ? ' — reported complete' : ''}{entry.resolved ? ' — need resolved' : ''}</Action>
       {pendingCompletionScopes.includes(entry.id) && !entry.completion_reported_at && <>
         <Copy>Completion report unconfirmed for {entry.older_adult}: {entry.task}. It has not been shown as shared.</Copy>
-        <Action secondary disabled={busy} onPress={() => void perform(() => assistance.retryPendingCompletion(entry.id), () => 'Completion report saved by the backend. The need remains unresolved.', true, entry.id)}>Retry the same completion report for {entry.older_adult}: {entry.task}</Action>
+        <Action secondary disabled={busy} onPress={() => void perform(() => assistance.retryPendingCompletion(entry.id), () => 'Completion report saved by the backend. Check the need status above.', true, entry.id)}>Retry the same completion report for {entry.older_adult}: {entry.task}</Action>
       </>}
     </Fragment>) : <Copy>No accepted work in your current authorized scopes.</Copy>}
+    {pendingResolutionScopes.map(scope => {
+      const entry = list.find(current => current.id === scope);
+      const label = entry ? ` for ${entry.older_adult}: ${entry.task}` : '';
+      return <Fragment key={`pending-resolution-${scope}`}>
+        <Copy>Need resolution is unconfirmed{label}. Retry the same action to confirm its outcome.</Copy>
+        <Action secondary disabled={busy} onPress={() => void perform(() => assistance.retryPendingResolution(scope), outcome => outcome.outcome === 'already-resolved' ? 'This need was already resolved.' : 'Need resolution saved by the backend.', false, scope, true)}>Retry the same resolution action{label}</Action>
+      </Fragment>;
+    })}
     {showAll && <>
       <Copy heading>Available requests</Copy>
       {opportunities.length ? opportunities.map(entry => <Action key={`open-${entry.id}`} secondary onPress={() => select(entry.id)}>Open request for {entry.older_adult}: {entry.task}</Action>) : <Copy>No available requests in your current authorized scopes.</Copy>}
       {!!declined.length && <><Copy heading>Previously declined</Copy>{declined.map(entry => <Action key={`declined-${entry.id}`} secondary onPress={() => select(entry.id)}>Reconsider {entry.task} for {entry.older_adult}</Action>)}</>}
+      {!!resolvedHistory.length && <><Copy heading>Resolved needs</Copy>{resolvedHistory.map(entry => <Action key={`resolved-${entry.id}`} secondary onPress={() => select(entry.id)}>Open resolved need for {entry.older_adult}: {entry.task}</Action>)}</>}
       <Copy heading>Coordination needs</Copy>
-      {coordination.length ? coordination.map(entry => <Action key={`coordinate-${entry.id}`} secondary onPress={() => select(entry.id)}>Open {entry.older_adult}: {entry.task || 'record first need'} — {entry.arranged ? 'arranged' : 'unresolved'}</Action>) : <Copy>No authorized coordination needs here. Record applicable permission in Scoped participation if you are coordinating.</Copy>}
+      {coordination.length ? coordination.map(entry => <Action key={`coordinate-${entry.id}`} secondary onPress={() => select(entry.id)}>Open {entry.older_adult}: {entry.task || 'record first need'} — {entry.resolved ? 'need resolved' : entry.arranged ? 'arranged, need unresolved' : 'unresolved'}</Action>) : <Copy>No authorized coordination needs here. Record applicable permission in Scoped participation if you are coordinating.</Copy>}
     </>}
     {item && <>
       <Copy heading>Request details for {item.older_adult}</Copy>
@@ -183,26 +224,42 @@ export function AssistanceScreen({ account, assistance, initialId, initialView }
         <Copy>Scheduled time: {scheduleLabels(item.scheduled_at, item.schedule_zone).authoritative}</Copy>
         <Copy>Your local time: {scheduleLabels(item.scheduled_at, item.schedule_zone).participant}</Copy>
       </> : <Copy>No scheduled time.</Copy>}
-      <Copy>{item.arranged ? item.accepted_by_me ? 'You accepted this assistance responsibility.' : 'This assistance is already arranged.' : 'Assistance is not arranged yet.'}</Copy>
+      <Copy>{item.arranged ? item.accepted_by_me ? 'You accepted this assistance responsibility.' : 'This assistance is already arranged.' : item.resolved ? 'No assistance commitment was recorded before resolution.' : 'Assistance is not arranged yet.'}</Copy>
+      {item.resolved ? <>
+        <Copy>Need resolved at {new Date(item.resolved_at!).toLocaleString()} by {item.resolved_by || 'an authorized participant'}. This is an attributable report, not independent verification.</Copy>
+        {item.arranged && !item.completion_reported_at && <Copy>Accepted assistance remains outstanding and needs follow-up. Resolution did not complete or cancel it.</Copy>}
+      </> : <Copy>The need is unresolved until someone expressly resolves it.</Copy>}
       {item.coordinator && item.arranged && item.accepted_by && <Copy>Accepted by {item.accepted_by}{item.accepted_at ? ` at ${new Date(item.accepted_at).toLocaleString()}` : ''}.</Copy>}
       {item.completion_reported_at && <>
         <Copy>{item.completion_reported_by_me ? 'You reported this assistance complete' : item.coordinator && item.accepted_by ? `Reported complete by ${item.accepted_by}` : 'This assistance was reported complete'} at {new Date(item.completion_reported_at).toLocaleString()}.</Copy>
-        <Copy>This is a report, not independent verification. The need remains unresolved until someone expressly resolves it.</Copy>
+        <Copy>This is a report, not independent verification. {item.resolved ? 'Need resolution was expressly recorded.' : 'The need remains unresolved until someone expressly resolves it.'}</Copy>
       </>}
       {item.accepted_by_me && !item.completion_reported_at && !!item.commitment_id && <>
-        <Action disabled={busy || completionStale} onPress={() => {
+        <Action disabled={busy || completionStale || combinedPending} onPress={() => {
           const opened = completionBase.current;
-          if (opened) void perform(() => assistance.complete(opened), () => 'Completion report saved by the backend. The need remains unresolved.', true, opened.id);
+          if (opened) void perform(() => assistance.complete(opened), () => 'Completion report saved by the backend. Check the need status above.', true, opened.id);
         }}>Report my assistance complete</Action>
         <Copy>Report only the assistance you accepted. This does not verify the outcome or resolve the need.</Copy>
       </>}
       {completionStale && <Action secondary disabled={busy} onPress={() => { completionBase.current = null; setCompletionStale(false); setNotice(''); void load(selectedRef.current); }}>Review current responsibility</Action>}
-      {item.my_answer === 'deferred' && !item.arranged && <Copy>You deferred this request. You can reconsider while it remains available.</Copy>}
-      {item.coordinator && !item.created && <Action disabled={busy} onPress={() => openForm('first')}>Record this first need</Action>}
+      {item.can_resolve && !item.resolved && <>
+        {item.arranged && !item.completion_reported_at && <Copy>Accepted assistance is still outstanding. Resolve only if the underlying need was genuinely addressed; this action will leave that responsibility requiring follow-up.</Copy>}
+        <Action disabled={busy || resolutionStale || combinedPending} onPress={() => {
+          const opened = resolutionBase.current;
+          if (opened) void perform(() => assistance.resolve(opened), outcome => outcome.outcome === 'already-resolved' ? 'This need was already resolved.' : 'Need resolution saved by the backend.', false, opened.id, true);
+        }}>Resolve this need</Action>
+        {item.accepted_by_me && !item.completion_reported_at && !!item.commitment_id && <Action secondary disabled={busy || resolutionStale || completionStale || combinedPending} onPress={() => {
+          const opened = resolutionBase.current;
+          if (opened) void perform(() => assistance.completeAndResolve(opened), () => 'Your completion report and express need resolution were saved together by the backend.', false, opened.id, true);
+        }}>Report my assistance complete and resolve this need</Action>}
+      </>}
+      {resolutionStale && <Action secondary disabled={busy} onPress={() => { resolutionBase.current = null; setResolutionStale(false); setNotice(''); void load(selectedRef.current); }}>Review current need</Action>}
+      {item.my_answer === 'deferred' && !item.arranged && !item.resolved && <Copy>You deferred this request. You can reconsider while it remains available.</Copy>}
+      {item.coordinator && !item.created && !item.resolved && <Action disabled={busy} onPress={() => openForm('first')}>Record this first need</Action>}
       {item.can_create_other && <Action secondary disabled={busy} onPress={() => openForm('another')}>Create another need for {item.older_adult}</Action>}
-      {item.coordinator && item.created && !item.arranged && <Action secondary disabled={busy} onPress={() => openForm('edit')}>Edit unaccepted need</Action>}
+      {item.coordinator && item.created && !item.arranged && !item.resolved && <Action secondary disabled={busy} onPress={() => openForm('edit')}>Edit unaccepted need</Action>}
       {item.coordinator && item.arranged && <Copy>Accepted task, place, scheduled time and essential instructions need an explicit change workflow. This slice preserves the commitment.</Copy>}
-      {item.can_offer && <>
+      {item.can_offer && !item.resolved && <>
         <Copy heading>Make this request available</Copy>
         <Copy>Choosing a Helper also shares this need&apos;s existing practical details. It does not grant restricted background or accept work for them.</Copy>
         {item.candidates?.filter(candidate => candidate.offered).map(candidate => <Copy key={`offered-${candidate.user_id}`}>Available to {candidate.label}; no commitment yet.</Copy>)}
@@ -216,7 +273,7 @@ export function AssistanceScreen({ account, assistance, initialId, initialView }
         {item.candidates.filter(candidate => !candidate.ongoing).map(candidate => <Action key={`ongoing-${candidate.user_id}`} secondary disabled={busy} onPress={() => void perform(() => assistance.ongoing(item, candidate.user_id, true), () => `Future need audience includes ${candidate.label}.`)}>Include {candidate.label} for future needs</Action>)}
         {item.candidates.filter(candidate => candidate.ongoing).map(candidate => <Action key={`stop-ongoing-${candidate.user_id}`} secondary disabled={busy} onPress={() => void perform(() => assistance.ongoing(item, candidate.user_id, false), () => `Future new needs will no longer automatically include ${candidate.label}. Existing access is unchanged.`)}>Stop automatic inclusion for {candidate.label}</Action>)}
       </>}
-      {item.eligible && !item.arranged && <>
+      {item.eligible && !item.arranged && !item.resolved && <>
         <Action disabled={busy} onPress={() => void perform(() => assistance.accept(item), outcome => outcome.outcome === 'already-arranged' ? 'Someone else already arranged this assistance. Your response did not replace it.' : 'You accepted this assistance responsibility.')}>Accept responsibility</Action>
         <Action secondary disabled={busy} onPress={() => void perform(() => assistance.answer(item, 'declined'), () => 'You declined this request. The need remains unresolved for others.')}>Decline this request</Action>
         <Action secondary disabled={busy} onPress={() => void perform(() => assistance.answer(item, 'deferred'), () => 'You deferred this request. No commitment was made.')}>Defer for now</Action>
@@ -240,7 +297,7 @@ export function AssistanceScreen({ account, assistance, initialId, initialView }
       <Action secondary disabled={busy} onPress={() => { setMode(null); setFormBase(null); setStaleRejected(false); setNotice(''); }}>Close without saving</Action>
     </>}
     {detailUnavailable && selected && <Action secondary disabled={busy} onPress={() => void load(selectedRef.current)}>Retry current details</Action>}
-    {retry && <Action secondary disabled={busy} onPress={() => void perform(retry.action, retry.completion ? retry.success : () => 'Action confirmed. Check the current request state above.', retry.completion, retry.scope)}>Retry the same action</Action>}
+    {retry && <Action secondary disabled={busy} onPress={() => void perform(retry.action, retry.completion || retry.resolution ? retry.success : () => 'Action confirmed. Check the current request state above.', retry.completion, retry.scope, retry.resolution)}>Retry the same action</Action>}
     {!!notice && <Copy>{notice}</Copy>}
   </>} />;
 }

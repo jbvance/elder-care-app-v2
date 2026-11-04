@@ -126,6 +126,130 @@ test('a pending completion is unavailable to another signed-in account', async (
   expect(await service.pendingCompletionScopes()).toEqual([]);
 });
 
+test('an uncertain combined action retains its opened target and operation across another mutation', async () => {
+  let uncertain = true, sequence = 0;
+  const calls: { name: string; input: Record<string, unknown> }[] = [];
+  const client = { auth: { getSession: async () => ({ data: { session: { user: { id: 'performer' }, access_token: 'fixture-token' } } }) },
+    rpc: (name: string, input: Record<string, unknown>) => {
+      calls.push({ name, input });
+      const lost = name === 'complete_and_resolve_assistance' && uncertain;
+      return { setHeader: async () => ({ data: lost ? null : { outcome: name === 'answer_assistance' ? 'deferred' : 'completed-and-resolved' }, status: lost ? 0 : 200, error: lost ? { code: '', message: 'Transport interrupted' } : null }) };
+    } } as unknown as SupabaseClient;
+  const service = createAssistanceService(client, () => `operation-${++sequence}`);
+  const opened = { id: 'need', can_resolve: true, accepted_by_me: true, commitment_id: 'commitment-1', material_revision: 4, resolution_snapshot: 'opened-target' } as WorkItem;
+  await expect(service.completeAndResolve(opened)).rejects.toBeInstanceOf(AssistanceUncertainError);
+  expect(await service.pendingResolutionScopes()).toEqual(['need']);
+  await service.answer({ id: 'other', material_revision: 2 } as WorkItem, 'deferred');
+  uncertain = false;
+  await service.retryPendingResolution('need');
+  expect(calls.map(call => call.name)).toEqual(['complete_and_resolve_assistance', 'answer_assistance', 'complete_and_resolve_assistance']);
+  expect(calls[2].input).toEqual(calls[0].input);
+  expect(calls[0].input).toMatchObject({ p_commitment: 'commitment-1', p_material_revision: 4, p_snapshot: 'opened-target' });
+  expect(await service.pendingResolutionScopes()).toEqual([]);
+});
+
+test('an uncertain combined action blocks competing actions for its need and keeps its retry after other work', async () => {
+  let combinedStatus = 0, sequence = 0;
+  const calls: { name: string; input: Record<string, unknown> }[] = [];
+  const client = { auth: { getSession: async () => ({ data: { session: { user: { id: 'performer' }, access_token: 'fixture-token' } } }) },
+    rpc: (name: string, input: Record<string, unknown>) => {
+      calls.push({ name, input });
+      const status = name === 'complete_and_resolve_assistance' ? combinedStatus : 200;
+      return { setHeader: async () => ({ data: status === 200 ? { outcome: name === 'answer_assistance' ? 'deferred' : 'completed-and-resolved' } : null,
+        status, error: status === 200 ? null : { code: status === 409 ? 'PT409' : '', message: 'Current need changed' } }) };
+    } } as unknown as SupabaseClient;
+  const service = createAssistanceService(client, () => `operation-${++sequence}`);
+  const opened = { id: 'need', can_resolve: true, accepted_by_me: true, commitment_id: 'commitment-1', material_revision: 4, resolution_snapshot: 'opened-target' } as WorkItem;
+  await expect(service.completeAndResolve(opened)).rejects.toBeInstanceOf(AssistanceUncertainError);
+  expect(await service.pendingCombinedScopes()).toEqual(['need']);
+  await expect(service.complete(opened)).rejects.toThrow(/pending combined/i);
+  await expect(service.resolve(opened)).rejects.toThrow(/pending combined/i);
+  expect(calls).toHaveLength(1);
+  await service.answer({ id: 'other', material_revision: 2 } as WorkItem, 'deferred');
+  combinedStatus = 200;
+  await service.retryPendingResolution('need');
+  expect(calls.map(call => call.name)).toEqual(['complete_and_resolve_assistance', 'answer_assistance', 'complete_and_resolve_assistance']);
+  expect(calls[2].input).toEqual(calls[0].input);
+  expect(await service.pendingCombinedScopes()).toEqual([]);
+});
+
+test('a definitive combined rejection releases its need for a new completion action', async () => {
+  let combinedStatus = 0;
+  const calls: string[] = [];
+  const client = { auth: { getSession: async () => ({ data: { session: { user: { id: 'performer' }, access_token: 'fixture-token' } } }) },
+    rpc: (name: string) => {
+      calls.push(name);
+      const status = name === 'complete_and_resolve_assistance' ? combinedStatus : 200;
+      return { setHeader: async () => ({ data: status === 200 ? { outcome: 'reported' } : null, status,
+        error: status === 409 ? { code: 'PT409', message: 'Current need changed' } : status === 0 ? { code: '', message: 'Transport interrupted' } : null }) };
+    } } as unknown as SupabaseClient;
+  const service = createAssistanceService(client, () => 'operation');
+  const opened = { id: 'need', can_resolve: true, accepted_by_me: true, commitment_id: 'commitment-1', material_revision: 4, resolution_snapshot: 'opened-target' } as WorkItem;
+  await expect(service.completeAndResolve(opened)).rejects.toBeInstanceOf(AssistanceUncertainError);
+  combinedStatus = 409;
+  await expect(service.retryPendingResolution('need')).rejects.toBeInstanceOf(AssistanceStaleError);
+  expect(await service.pendingCombinedScopes()).toEqual([]);
+  await service.complete(opened);
+  expect(calls).toEqual(['complete_and_resolve_assistance', 'complete_and_resolve_assistance', 'report_assistance_completion']);
+});
+
+test('completion acknowledgement uses newly read resolution intent while independent changes stay stale', async () => {
+  let snapshot = 'opened-target', completionStatus = 0;
+  const calls: { name: string; input: Record<string, unknown> }[] = [];
+  const client = { auth: { getSession: async () => ({ data: { session: { user: { id: 'performer' }, access_token: 'fixture-token' } } }) },
+    rpc: (name: string, input: Record<string, unknown>) => {
+      calls.push({ name, input });
+      const status = name === 'report_assistance_completion' ? completionStatus : name === 'resolve_assistance' && input.p_snapshot !== snapshot ? 409 : 200;
+      const data = name === 'read_assistance' ? { id: 'need', can_resolve: true, resolution_snapshot: snapshot } : { outcome: name === 'resolve_assistance' ? 'resolved' : 'reported' };
+      return { setHeader: async () => ({ data: status === 200 ? data : null, status,
+        error: status === 409 ? { code: 'PT409', message: 'Target need changed' } : status === 0 ? { code: '', message: 'Transport interrupted' } : null }) };
+    } } as unknown as SupabaseClient;
+  const service = createAssistanceService(client, () => 'operation');
+  const opened = { id: 'need', can_resolve: true, accepted_by_me: true, commitment_id: 'commitment-1', material_revision: 4, resolution_snapshot: 'opened-target' } as WorkItem;
+  await expect(service.complete(opened)).rejects.toBeInstanceOf(AssistanceUncertainError);
+  snapshot = 'after-completion';
+  await expect(service.resolve(opened)).rejects.toBeInstanceOf(AssistanceStaleError);
+  completionStatus = 200;
+  await service.retryPendingCompletion('need');
+  const refreshed = await service.read('need');
+  snapshot = 'independent-change';
+  await expect(service.resolve(refreshed)).rejects.toBeInstanceOf(AssistanceStaleError);
+  const current = await service.read('need');
+  await expect(service.resolve(current)).resolves.toMatchObject({ outcome: 'resolved' });
+  expect(calls.filter(call => call.name === 'resolve_assistance').map(call => call.input.p_snapshot)).toEqual(['opened-target', 'after-completion', 'independent-change']);
+});
+
+test('resolution distinguishes stale target state from current-access denial', async () => {
+  let status = 409, sequence = 0;
+  const client = { auth: { getSession: async () => ({ data: { session: { user: { id: 'coordinator' }, access_token: 'fixture-token' } } }) },
+    rpc: () => ({ setHeader: async () => ({ data: null, status, error: { code: status === 409 ? 'PT409' : 'PT403', message: 'Current state changed' } }) }) } as unknown as SupabaseClient;
+  const service = createAssistanceService(client, () => `operation-${++sequence}`);
+  const opened = { id: 'need', can_resolve: true, resolution_snapshot: 'opened-target' } as WorkItem;
+  await expect(service.resolve(opened)).rejects.toBeInstanceOf(AssistanceStaleError);
+  expect(await service.pendingResolutionScopes()).toEqual([]);
+  status = 403;
+  await expect(service.resolve(opened)).rejects.toBeInstanceOf(AssistanceAccessDeniedError);
+  expect(await service.pendingResolutionScopes()).toEqual([]);
+  expect(sequence).toBe(2);
+});
+
+test('an unconfirmed resolution cannot be retried from another signed-in account', async () => {
+  let user = 'coordinator';
+  let authChange: ((event: string, session: { user: { id: string } } | null) => void) | undefined;
+  const client = { auth: {
+    getSession: async () => ({ data: { session: { user: { id: user }, access_token: 'fixture-token' } } }),
+    onAuthStateChange: (callback: typeof authChange) => { authChange = callback; return { data: { subscription: { unsubscribe: () => {} } } }; },
+  }, rpc: () => ({ setHeader: async () => ({ data: null, status: 0, error: { code: '', message: 'Transport interrupted' } }) }) } as unknown as SupabaseClient;
+  const service = createAssistanceService(client, () => 'resolution-operation');
+  await expect(service.resolve({ id: 'need', can_resolve: true, resolution_snapshot: 'opened-target' } as WorkItem)).rejects.toBeInstanceOf(AssistanceUncertainError);
+  user = 'another-account';
+  expect(await service.pendingResolutionScopes()).toEqual([]);
+  await expect(service.retryPendingResolution('need')).rejects.toThrow('No pending resolution action remains');
+  authChange?.('SIGNED_IN', { user: { id: user } });
+  user = 'coordinator';
+  expect(await service.pendingResolutionScopes()).toEqual([]);
+});
+
 test.each([
   ['read_assistance', (service: ReturnType<typeof createAssistanceService>) => service.read('need')],
   ['read_scope_context', (service: ReturnType<typeof createAssistanceService>) => service.preparedTiming('need')],

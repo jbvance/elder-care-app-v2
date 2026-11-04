@@ -101,7 +101,7 @@ async function main() {
   const ownerRead = await rpc('read_assistance', { p_scope: root }, owner);
   check(performerRead.body.completion_reported_by_me && performerRead.body.completion_reported_at === reportedAt && performerRead.body.arranged, 'Own acknowledged completion projection');
   check(ownerRead.body.completion_reported_at === reportedAt && ownerRead.body.accepted_by === performer.user.email && !JSON.stringify(performerRead.body).includes('Fictional restricted background'), 'Coordinator attribution or restricted projection');
-  check(!('resolved' in ownerRead.body) && sql(`select count(*) from private.assistance_commitments where scope_id='${root}'`) === '1', 'Completion silently resolved need or removed commitment');
+  check(ownerRead.body.resolved === false && sql(`select count(*) from private.assistance_commitments where scope_id='${root}'`) === '1', 'Completion silently resolved need or removed commitment');
 
   stage = 'revocation and independent accepted work';
   const rootNow = await rpc('read_assistance', { p_scope: root }, owner);
