@@ -83,7 +83,8 @@ export function AccountScreen({ account, header, invitationMode = false }: { acc
         })}>Save my draft to this account</Action>
       </>}
       {view.arrangements.map(item => <Copy key={item.id}>{item.draft.olderAdult}: {item.draft.description}{item.draft.date ? ` — ${item.draft.date} ${item.draft.time} (${item.draft.timeZone})` : ''}{item.draft.location ? ` — ${item.draft.location}` : ''}</Copy>)}
-      {view.arrangements.map(item => <Action key={item.id} secondary onPress={() => router.push({ pathname: '/invite', params: { id: item.id } })}>Permission and invitations for {item.draft.olderAdult}</Action>)}
+      {view.arrangements.map(item => <Action key={item.id} onPress={() => router.push({ pathname: '/participation', params: { id: item.id } })}>Coordinate and invite for {item.draft.olderAdult}</Action>)}
+      {view.arrangements.map(item => <Action key={item.id} secondary onPress={() => router.push({ pathname: '/invite', params: { id: item.id } })}>Manage existing links and invitation authority for {item.draft.olderAdult}</Action>)}
       {!view.arrangements.length && <Copy>No private arrangements saved to this account yet.</Copy>}
       </>}
       <Action secondary disabled={busy} onPress={() => {

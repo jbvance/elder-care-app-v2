@@ -11,7 +11,7 @@ const separatePowers: [keyof Omit<Rights, 'preset' | 'practical'>, string][] = [
   ['manage', 'Invite and remove within this need'], ['delegate', 'Delegate participation management'],
   ['background', 'Read restricted background'], ['share_background', 'Authorize restricted readers'],
   ['disclose', 'Broaden the practical audience'], ['cancel', 'Cancellation authority for later workflows'],
-  ['resolve', 'Resolution capability for later workflows'], ['external', 'External disclosure authority for later workflows'],
+  ['resolve', 'Express need resolution, subject to current authority'], ['external', 'External disclosure authority for later workflows'],
 ];
 export function rightsDescription(r: Rights) {
   return [r.preset === 'coordinator' ? 'Coordinator for this need' : 'Helper for this need', r.practical ? 'practical information' : 'practical access paused', ...separatePowers.filter(([key]) => r[key]).map(([,label]) => label)].join('; ');
@@ -88,7 +88,7 @@ export function ParticipationScreen({ account, participation, invitations, initi
     {entries.map(item => <Action key={item.id} secondary disabled={busy} onPress={() => { setSelected(item.id); setNotice(''); }}>{item.prepared ? 'Open scope: ' : 'Prepare scoped permission: '}{item.title}</Action>)}
     {entry && !entry.prepared && <>
       <Copy heading>Record applicable permission</Copy>
-      <Copy>For ongoing coordination of prepared need scopes in this arrangement: coordinate, invite and remove, and disclose the practical summary to designated helpers. Coordinator resolution capability is recorded for later use. Other powers remain separate. Nothing is shared by ownership alone.</Copy>
+      <Copy>For ongoing coordination of prepared need scopes in this arrangement: coordinate, invite and remove, and disclose the practical summary to designated helpers. Coordinator express need resolution is available in Needs and opportunities, subject to current authority. Other powers remain separate. Nothing is shared by ownership alone.</Copy>
       <Field label="Who authorized this scope?" value={source} onChangeText={setSource} editable={!busy} maxLength={254} />
       <Action secondary disabled={busy} onPress={() => setAdvanced(!advanced)}>Additional permission already obtained</Action>
       {advanced && powerButtons(initialRights, setInitialRights)}
@@ -147,7 +147,7 @@ export function ParticipationScreen({ account, participation, invitations, initi
         <Field label="Additional authorized need scope" value={additional} onChangeText={setAdditional} editable={!busy} maxLength={8000} />
         <Action secondary disabled={busy || !additional.trim()} onPress={() => void perform(() => participation.addScope(view, additional), 'Additional scoped information prepared privately to its coordination context. Helpers were not included automatically.')}>Prepare additional scoped information</Action>
       </>}
-      <Copy>Cancellation, resolution and external disclosure capabilities are recorded only. Their responsibility and export workflows are not available in this slice.</Copy>
+      <Copy>Express need resolution is available in Needs and opportunities with current authority. Completion alone does not resolve a need. Express resolution alone does not complete or cancel outstanding accepted assistance; it remains open for follow-up. Cancellation and external sharing are not available here yet.</Copy>
     </>}
     {!!notice && <Copy>{notice}</Copy>}
   </>} />;

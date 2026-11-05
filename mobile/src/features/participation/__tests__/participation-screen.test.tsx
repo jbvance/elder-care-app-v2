@@ -100,15 +100,28 @@ test('a delayed protected read cannot restore content after sign-out', async () 
   expect(screen.queryByText('Must stay hidden')).toBeNull();
 });
 
-test('new setup records the explicitly shown Coordinator defaults without bundling restricted or onward powers', async () => {
+test.each(['reported', 'direct'] as const)('new %s setup records the exact approved Coordinator defaults without bundling separate powers', async kind => {
   const f=fixture();let prepared=false;
   f.participation.list=async()=>[{id:'scope',arrangement_id:'arrangement',title:'Private preparation',prepared}];
   const start=jest.fn(async()=>{prepared=true;return 'scope';});f.participation.start=start;
   await renderRouter({index:()=> <ParticipationScreen {...f} initialId="scope" />});
   await screen.findByLabelText('Who authorized this scope?');expect(start).not.toHaveBeenCalled();
+  expect(screen.getByText(/Coordinator express need resolution is available in Needs and opportunities, subject to current authority/)).toBeTruthy();
   await fireEvent.changeText(screen.getByLabelText('Who authorized this scope?'),'Fictional Morgan');
-  await fireEvent.press(screen.getByRole('button',{name:'Record reported coordination permission'}));
-  expect(start).toHaveBeenCalledWith('scope','reported','Fictional Morgan',expect.objectContaining({preset:'coordinator',resolve:true,manage:true,disclose:true,delegate:false,background:false,cancel:false,external:false}));
+  await fireEvent.press(screen.getByRole('button',{name:kind === 'reported' ? 'Record reported coordination permission' : 'I am the older adult: record my own permission'}));
+  expect(start).toHaveBeenCalledTimes(1);
+  expect(start).toHaveBeenCalledWith('scope',kind,kind === 'reported' ? 'Fictional Morgan' : 'Own permission', {
+    preset: 'coordinator', practical: true, manage: true, delegate: false, background: false,
+    share_background: false, disclose: true, cancel: false, resolve: true, external: false,
+  });
+});
+
+test('resolution copy describes current authority, separate completion and outstanding accepted assistance', async () => {
+  const f = fixture();
+  await renderRouter({ index: () => <ParticipationScreen {...f} initialId="scope" /> });
+  await screen.findByText(/Coordinator for this need;.*Express need resolution, subject to current authority/);
+  expect(screen.getByText('Express need resolution is available in Needs and opportunities with current authority. Completion alone does not resolve a need. Express resolution alone does not complete or cancel outstanding accepted assistance; it remains open for follow-up. Cancellation and external sharing are not available here yet.')).toBeTruthy();
+  expect(screen.queryByText(/Resolution capability for later workflows|resolution capability is recorded for later use|Cancellation, resolution and external disclosure/)).toBeNull();
 });
 
 test('broadening an existing practical audience uses the recognizable candidate and explains existing disclosure', async () => {

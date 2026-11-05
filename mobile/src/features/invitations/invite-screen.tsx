@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Clipboard } from 'react-native';
+import { router } from 'expo-router';
 import { openURL } from 'expo-linking';
 import type { Arrangement } from '../account/account-service';
 import { Action, Copy, Field, Page } from '../private-draft/draft-ui';
@@ -7,7 +8,6 @@ import type { Invitations, Scope } from './invitation-service';
 
 export function InviteScreen({ arrangement, invitations }: { arrangement: Arrangement; invitations: Invitations }) {
   const [scope, setScope] = useState<Scope | null>(null);
-  const [source, setSource] = useState('');
   const [recipient, setRecipient] = useState('');
   const [notice, setNotice] = useState('');
   const [busy, setBusy] = useState(false);
@@ -24,9 +24,8 @@ export function InviteScreen({ arrangement, invitations }: { arrangement: Arrang
     <Copy>Visible to the designated recipient only after explicit joining: {arrangement.draft.olderAdult} — {arrangement.draft.description} — {arrangement.draft.date} {arrangement.draft.time} {arrangement.draft.timeZone} — {arrangement.draft.location}.</Copy>
     <Copy>Your signed-in email address will identify you as the inviter. The rest of your private arrangement stays private. Share only practical information authorized for this need. This statement does not verify legal consent or representative authority.</Copy>
     {!scope ? <>
-      <Field label="Who gave permission for this need and delegated inviting and removing helpers?" value={source} onChangeText={setSource} maxLength={254} editable={!busy} />
-      <Action disabled={busy || !source.trim()} onPress={() => void perform(() => invitations.prepare(arrangement.id, 'reported', source))}>Record their reported permission and delegation</Action>
-      <Action secondary disabled={busy} onPress={() => void perform(() => invitations.prepare(arrangement.id, 'direct', 'Own permission'))}>I am the older adult: give my own permission and delegation</Action>
+      <Copy>Open scoped participation to record applicable coordination permission. Opening it grants no permission or access.</Copy>
+      <Action disabled={busy} onPress={() => router.push({ pathname: '/participation', params: { id: arrangement.id } })}>Coordinate and invite for {arrangement.draft.olderAdult}</Action>
     </> : <>
       <Copy>{scope.permission_kind} permission: {scope.permission_source}. Recorded {scope.recorded_at}. Scope: this need&apos;s practical summary, invitations and removal only. No onward delegation.</Copy>
       {scope.authority_active && scope.shareable ? <>
